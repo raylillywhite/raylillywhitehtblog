@@ -1,0 +1,22 @@
+--- 
+categories: []
+
+layout: post
+published: true
+permalink: /lets-stop-making-our-users-type-gmailcom/index.html
+title: Let's stop making our users type @gmail.com
+---
+<p>At HotelTonight, we want our hotel deals to be as accessible as possible to our customers, which means reducing time spent doing tedious things such as signing up and logging in. &nbsp;Accordingly, it occurred to us recently that we could save many of our customer a few seconds if we autocomplete their email domain while they're typing. At the time of this writing, over 75% of our customers' email addresses are from just&nbsp;<em>five</em>&nbsp;domains (gmail.com, yahoo.com, hotmail.com, aol.com, comcast.net). so we should be able to make a pretty accurate educated guess.</p>
+<p>Autocompleting email addresses can be tricky to implement because it can easily become distracting and get in the user's way. &nbsp;It's something that should be completely optional and never overbearing. &nbsp;Therefore, we've come up with a solution that works as follows:</p>
+<ol>
+<li>Start suggesting an email domain once the user types @</li>
+<li>Each time the user types a character after @, re-evaluate the suggestion (i.e. typing "@h" yields "@hotmail.com", while "@hote" produces "@hoteltonight.com").</li>
+<li>Stop suggesting once the user types "." -- to allow subsets of domains to be used. &nbsp;For example, gmail.co instead of gmail.com. &nbsp;Plus, once the user has typed a period we figure they're intent on finishing the whole thing, so we'd like to get out of their way.</li>
+</ol>
+<p>The first email address that appears after the user types @ is @gmail.com, which means that a full third of our users won't have to finish the "gmail.com" part. &nbsp;For them, the days of fat fingering "@gmail.con" are over.</p>
+<p>Our solution relies on&nbsp;<a href="https://github.com/hoteltonight/HTAutocompleteTextField">HTAutocompleteTextField</a>, which can be used to autocompletion any type of data in a text field (for example, a URL), as the logic is written by the developer.</p>
+<p>We think this is pretty swell, and we'd love to see this used in every app, because, frankly, we as users are sick of typing "gmail.com" over and over again. &nbsp;Check out HTAutocompleteTextField on&nbsp;<a href="https://github.com/hoteltonight/HTAutocompleteTextField" title="Github">Github</a>&nbsp;and the accompanying example for the implementation details. &nbsp;Please let us know any feedback you might have in the Comments section.</p>
+<p>Here's a preview of how it works in the app, or you can see it live in Hotel Tonight on the <a href="http://www.hoteltonight.com/iphone">App Store</a>:</p>
+<p>&nbsp;</p>
+<p><img title="HTAutocompleteTextField in action" src="https://raw.github.com/hoteltonight/HTAutocompleteTextField/master/demo.gif" alt="HotelTonight" style="display: block; margin: 10px auto 30px auto;" /></p>
+<p>&nbsp;</p>

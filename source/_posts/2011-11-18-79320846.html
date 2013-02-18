@@ -1,0 +1,284 @@
+--- 
+categories: []
+
+layout: post
+published: true
+permalink: /79320846/index.html
+title: A hack/ship git workflow with shared remote branches
+---
+<p>This post describes how we've come to develop some <a href="http://github.com/hoteltonight/git-scripts">git scripts and shortcuts</a> to help manage our development process at Hotel Tonight. All the aliases/functions I use in the examples below are documented there.</p>
+<h2>Some History</h2>
+<p>When we first started working on Hotel Tonight, we adopted the <a href="http://reinh.com/blog/2008/08/27/hack-and-and-ship.html">hack &amp;&amp; ship</a> workflow to facilitate performing all work on feature-specific branches. As long as we had fewer developers than software projects, that worked great, because it was very unusual for more than one person to work on a feature before it was ready to ship to master.</p>
+<p>Somewhat similar to <a href="http://scottchacon.com/2011/08/31/github-flow.html">GitHub's workflow</a>, we don't have formal releases, and like to keep master always in a deployable state. So that means that when we want to collaborate on a new feature, we do it in a remote branch. And that's where things become tricky.</p>
+<h2>The dark side of rebasing</h2>
+<p>The original hack script pulls in other people's changes <em>from master</em>, by rebasing your branch onto master each time. This presents two problems if you're working on a shared remote branch with others -- first, it's not what you're most interested in. That is, while you'd like to keep up with changes on master, what you <em>really</em> want is to keep up with other people's changes on your branch.</p>
+<p>Second, and this is what really bit us, if you rebase commits you've already shared with others onto master, you're in effect rewriting history, and chaos ensues. Witness:</p>
+<p>I create a new branch and start working on some feature--</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (master)]$ gcb disco_ball
+ Switched to a new branch 'disco_ball'
+
+[chris example (disco_ball)]$ vi ball.rb
+
+[chris example (disco_ball %)]$ gac
+[disco_ball 73c2c53] Some initial thoughts on implementing the ball
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 ball.rb
+
+[chris example (disco_ball)]$ git push origin disco_ball
+ To /home/chris/example      * [new branch]      disco_ball -&gt; disco_ball</pre></div>
+</div>
+
+</blockquote>
+<p>Now my coworker checks it out, enters some of his ideas--</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (master)]$ git checkout -t origin/disco_ball
+ Branch disco_ball set up to track remote branch disco_ball from origin.
+ Switched to a new branch 'disco_ball'
+
+[patrick example (disco_ball)]$ vi ball.rb
+
+[patrick example (disco_ball *)]$ gac
+ [disco_ball 819d41c] Some alternate disco-ball strategies
+ 1 files changed, 1 insertions(+), 1 deletions(-)</pre></div>
+</div>
+
+</blockquote>
+<p>Meanwhile, say there have been some changes on master, and I want to pull those in, and then do some more work on the ball, then share that. Our old hack would do a rebase onto master..</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ git rebase master
+ First, rewinding head to replay your work on top of it...
+ Applying: Some initial thoughts on implementing the ball
+
+[chris example (disco_ball)]$ vi ball.rb
+
+[chris example (disco_ball *)]$ gac
+ [disco_ball a76373e] Lighting-related work
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+[chris example (disco_ball)]$ git push
+ To /home/chris/example
+   0ae267e..3fc53df  master -&gt; master
+ ! [rejected]        disco_ball -&gt; disco_ball (non-fast-forward)
+ error: failed to push some refs to '/home/chris/example'
+ To prevent you from losing history, non-fast-forward updates were rejected
+ Merge the remote changes before pushing again.  See the 'Note about
+ fast-forwards' section of 'git push --help' for details.</pre></div>
+</div>
+
+</blockquote>
+<p>And here's where things break down. My history doesn't match up with the remote history anymore (3fc53df is from master):</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ gl
+ a76373e Lighting-related work
+ 06bd2d1 Some initial thoughts on implementing the ball
+ 3fc53df An important component to keep the people upstairs away from us
+ 0ae267e Create example repo
+
+[chris example (disco_ball)]$ gl origin/disco_ball
+ 73c2c53 Some initial thoughts on implementing the ball
+ 0ae267e Create example repo</pre></div>
+</div>
+
+</blockquote>
+<p>Git suggests merging the remote changes, but that isn't pretty--</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ git pull origin disco_ball
+ From /home/chris/example
+  * branch            disco_ball -&gt; FETCH_HEAD
+ Auto-merging ball.rb
+ CONFLICT (add/add): Merge conflict in ball.rb
+ Automatic merge failed; fix conflicts and then commit the result.
+
+[chris example (disco_ball *+|MERGING)]$ cat ball.rb
+# There should be a whole ton of little mirrors on it!
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+# Also, important that we shine light at it.
+=======
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 73c2c5395095d5f0502db8d397d80f3aa029f1ec</pre></div>
+</div>
+
+</blockquote>
+<p>Alternately, we could force push, but then look what happens when Patrick tries to update:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (disco_ball)]$ git pull
+ From /home/chris/example
+  + 73c2c53...a76373e disco_ball -&gt; origin/disco_ball  (forced update)
+ Auto-merging ball.rb
+ CONFLICT (add/add): Merge conflict in ball.rb
+ Automatic merge failed; fix conflicts and then commit the result.
+
+[patrick example (disco_ball *+|MERGING)]$ cat ball.rb
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+# What if it's just one big shiny sphere?
+=======
+# There should be a whole ton of little mirrors on it!
+# Also, important that we shine light at it.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; a76373ed377efdc65849e887e8694eeca0e23730</pre></div>
+</div>
+
+</blockquote>
+<p>What a mess! So, clearly, this doesn't work. And, if you start squashing stuff, which we like to do sometimes, so that we don't have to spam github with all our intermediate work, the history-rewriting merge-conflict-creating situation becomes even uglier.</p>
+<h2>A kinder, gentler way to share</h2>
+<p>In order to control this potential for chaos, we needed a better strategy for how branches are shared. This is the procedure I came up with:</p>
+<ol>
+<li>When you 'hack' on a shared branch, you rebase your local changes <em>onto the remote branch</em>, not onto master. New commits from master are <em>not</em> pulled in during hack.</li>
+<li>When you 'share' your changes to an existing shared branch, first do an interactive rebase onto the remote, so you can squash, then <em>merge</em> in anything new from master, right before pushing. This is the only safe time to merge in from master, because you don't want to squash changes from master in amongst your local changes.</li>
+<li>When you 'ship' to master, do an interactive rebase onto master, to do a big squash of all the branch work -- and at that point, the remote branch is considered deprecated and should be removed, since its history no longer matches.</li>
+</ol>
+<p>Here's what that process looks like, starting over with a new disco ball branch:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (master)]$ gcb disco_ball
+ Switched to a new branch 'disco_ball'
+
+[chris example (disco_ball)]$ vi ball.rb
+
+[chris example (disco_ball %)]$ gac
+ [disco_ball 77f1fa3] Some initial thoughts on implementing the ball
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 ball.rb
+
+[chris example (disco_ball)]$ share
+ Successfully rebased and updated refs/heads/disco_ball.
+ To /home/chris/example
+  * [new branch]      disco_ball -&gt; disco_ball</pre></div>
+</div>
+
+</blockquote>
+<p>OK, so 'share' at this stage basically just created a new remote branch for us. Now Patrick wants to check that out; we'll give him a shortcut to see what's available and 'borrow' it:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (master)]$ borrow
+ Already on 'master'
+ Already up-to-date.
+   disco_ball
+   master
+
+[patrick example (master)]$ borrow disco_ball
+ Branch disco_ball set up to track remote branch disco_ball from origin.
+ Switched to a new branch 'disco_ball'</pre></div>
+</div>
+
+</blockquote>
+<p>Now let's say Patrick makes a few changes, and wants to share them with me.</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (disco_ball)]$ vi ball.rb
+
+[patrick example (disco_ball *)]$ gac
+ [disco_ball 840074c] Another thought on the disco ball
+  1 files changed, 1 insertions(+), 0 deletions(-)
+
+[patrick example (disco_ball)]$ vi ball.rb
+
+[patrick example (disco_ball *)]$ gac
+ [disco_ball bb06e68] No, wait, that was stupid, this instead.
+  1 files changed, 1 insertions(+), 1 deletions(-)
+
+[patrick example (disco_ball)]$ share -notest</pre></div>
+</div>
+
+</blockquote>
+<p>At that point he'll have a chance to squash:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>pick 021e621 Another thought on the disco ball
+pick f3b8218 No, wait, that was stupid, this instead.
+
+# Rebase 77f1fa3..f3b8218 onto 77f1fa3
+...</pre></div>
+</div>
+
+</blockquote>
+<p>The initial commit on the branch, which already exists in the remote, isn't listed here; that wouldn't be safe to squash.</p>
+<p>When the rebase is done the share will merge in the latest from master, and push to the remote. Note the '-notest' parameter; normally 'share' would notice that there was new stuff from master merged in, and run tests before pushing to make sure they hadn't broken anything -- since there aren't any tests set up for this example repo, we'll just skip that. In practice, you'll likely need to modify the 'runtests' script to actually run your project's tests correctly.</p>
+<p>When I next 'hack', I'll get both Patrick's changes, and the latest from master that was merged in when he shared:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ hack
+ From /home/chris/example
+  * branch            disco_ball -&gt; FETCH_HEAD
+ Updating 77f1fa3..0bf7d4c     Fast-forward
+  ball.rb    |    1 +
+  ceiling.rb |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ceiling.rb
+ Current branch disco_ball is up to date.</pre></div>
+</div>
+
+</blockquote>
+<h2>Ship It</h2>
+<p>So now if I'm ready to release the feature to master, I can just 'ship' normally. I'll get a chance to squash everything on the branch:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>pick 77f1fa3 Some initial thoughts on implementing the ball
+pick dd47d48 Another thought on the disco ball
+
+# Rebase a6ed99a..0bf7d4c onto a6ed99a
+...</pre></div>
+</div>
+
+</blockquote>
+<p>And then it's merged into master, and I'm warned to get rid of the remote. The 'gbdone' script will remove the shipped local and remote branches.</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ ship
+ From /home/chris/example
+  * branch            disco_ball -&gt; FETCH_HEAD
+ Already up-to-date.
+ Current branch disco_ball is up to date.
+ [detached HEAD 00db9d0] A basic disco ball
+  1 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ball.rb
+ Successfully rebased and updated refs/heads/disco_ball.
+ Switched to branch 'master'
+ Updating a6ed99a..00db9d0     Fast-forward
+  ball.rb |    2 ++
+  1 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ball.rb
+ To /home/chris/example
+    a6ed99a..00db9d0  master -&gt; master
+ Switched to branch 'disco_ball'
+ IMPORTANT: Please remember that your local branch has a conflicting
+ history with its remote now, due to rebase onto master. Don't let anyone
+ keep working on the remote; it needs to be blown away via either outright
+ removal or forced push.
+
+[chris example (disco_ball)]$ gbdone
+ Switched to branch 'master'
+ Deleted branch disco_ball (was 00db9d0).
+ To /home/chris/example
+  - [deleted]         disco_ball</pre></div>
+</div>
+
+</blockquote>
+<h2>A slightly more cautious way to ship</h2>
+<p>Alternately, you may want to do a code review and/or some extra testing, after rebasing onto master and squashing your changes, but before shipping. So we added a convenience method to 'pack' your code into another branch before release. Then you can 'share' that for code review, or just play with it locally, and ship it normally when you're done.</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (disco_ball)]$ pack
+ Switched to a new branch 'disco_ball_release'
+ [detached HEAD f77edf3] A basic disco ball
+  1 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ball.rb
+ Successfully rebased and updated refs/heads/disco_ball_release.
+
+[patrick example (disco_ball_release)]$ gl
+ f77edf3 A basic disco ball
+ a6ed99a An important component to keep the people upstairs away from us
+ 0ae267e Create example repo</pre></div>
+</div>
+
+</blockquote>
+<h2>In summary</h2>
+<p>I guess that all sounds a bit complicated. But once you get into the routine, it's pretty frictionless. When you're not sharing a branch, hack and ship still work the same as before. When you are, all you need to do most of the time is 'share' periodically to keep everybody in sync, or 'hack' occasionally if you want to pull in a coworker's changes before yours are ready to share.</p>
+<p>There are still a few edge cases, mostly around what happens when there are legit conflicts -- some of those the scripts will detect and help you out with, others we might still need to work on. Again, all of it's available here:</p>
+<p><a href="http://github.com/hoteltonight/git-scripts">http://github.com/hoteltonight/git-scripts</a></p>
+<p>Let us know what you think!</p>

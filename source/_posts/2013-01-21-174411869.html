@@ -1,0 +1,109 @@
+--- 
+categories: []
+
+layout: post
+published: true
+permalink: /174411869/index.html
+title: Internationalization and localization - Rails
+---
+<p>This is part two of our eight part series of posts on our first foray into internationalization and localization.<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong></p>
+<ol>
+<li>Planning, tools, and process</li>
+<li>Rails</li>
+<li>Android</li>
+<li>iOS</li>
+<li>Design/UX</li>
+<li>QA</li>
+<li>Marketing</li>
+<li>Measuring impact</li>
+</ol>
+<p>All of our server side apps are currently written in Ruby and use the Rails 3 framework. So where did we start? The first thing we did was to identify the major parts of the system that we needed to ensure were internationalized. Here are the big ticket items that we focused on:<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong></p>
+<ul>
+<li>API responses (that power our mobile apps)</li>
+<li>Emails</li>
+<li>Web content</li>
+<li>Payment/currency support</li>
+</ul>
+<h2>Remember the golden rule</h2>
+<p>When it comes to internationalization, the simplest and most important rule is to separate code and content. If you&rsquo;re using the Rails framework, the place to start is to read the<a href="http://guides.rubyonrails.org/i18n.html"> Rails Internationalization API guide</a>. Out of the box, you get a lot for free. Here are the basic things that we put in place:<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong>&nbsp;<br />1) Drop in the<a href="https://github.com/svenfuchs/i18n"> i18n gem</a><p />2) Locale is set based on the Accept-Language header that is passed in from a client. We leveraged Iain Hecker&rsquo;s<a href="https://github.com/iain/http_accept_language"> http_accept_language</a> gem for this.<p /><span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">if http_accept_language.header.present?<br /> &nbsp;&nbsp;I18n.locale = <br />&nbsp;&nbsp;&nbsp;&nbsp;http_accept_language.compatible_language_from(I18n.available_locales)<br />else<br />&nbsp;&nbsp;I18n.locale = :en<br />end</span><p />3) We centralized all localizable content for our API responses, emails, and web pages into .yml files. We chose to use multiple .yml files to make it easier to manage different types of content. E.g., legal vs. API responses. We created .yml files in <strong>config/locales</strong> with a key for each string and the string. For example:<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong><br /><strong style="font-family: Times; font-size: medium; font-weight: normal;"><span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">fr:</span><br /><span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;"> customer:</span><br /><span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;"> &nbsp;&nbsp;disabled_account: "Votre compte a &eacute;t&eacute; d&eacute;sactiv&eacute;"</span><br /></strong><br />when the view renders its content, it&rsquo;ll pull out the correct string based on the locale that&rsquo;s set based on the Accept-Language header passed in by the client.<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong><br /><strong style="font-family: Times; font-size: medium; font-weight: normal;"><span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">I18n.t 'customer.disabled_account'</span><br /></strong><br />As mentioned in our previous post, once you have the strings centralized in .yml files, we strongly recommend dropping in &ldquo;pseudo translations&rdquo; to ensure that you&rsquo;ve got all of your strings properly internationalized and to clearly see what kind of layout issues you&rsquo;ve got.</p>
+<p>[[posterous-content:ogxeEDcjheJEqjwAglhc]]4) For content in our database (e.g., the profile for each hotel), we ended up creating a custom solution. This isn&rsquo;t in shape to open source yet, but here&rsquo;s the general strategy:<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong></p>
+<ul style="margin-top: 0pt; margin-bottom: 0pt;">
+<li>Create a module that can be mixed into a given model that has translatable content (attribute)</li>
+<li>Set up associations so that a given attribute for a given instance of a model can have translations. There is a locale associated with each translation.</li>
+<li>Keep all translations in a single table</li>
+<li>Create rake tasks to export/import content for localization and between different environments (i.e., staging vs. production). Include options to filter based on model and locale.</li>
+<li>Create reusable elements that make it easy to manage translations in forms</li>
+<li>Add a method similar to <span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">I18n.t</span> to look up a translation for a given key (model, instance ID, and attribute name) and locale</li>
+</ul>
+<p>Note that our database (we use MySQL) was set up to use UTF-8 from the get-go. If you are not using UTF-8, you&rsquo;ll likely need to take on additional work to convert the data to UTF-8 so that you can store and sort content for multiple locales properly.<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong><br /><span style="font-size: small; font-family: Arial; background-color: transparent; vertical-align: baseline;">5) Ensure that strings and API responses format dates, numbers, and currencies properly. Be sure that</span> <span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">I18n.locale</span> is <span style="font-size: small;">set (or explicitly pass the locale as an option to the method) and leverage the following methods.</span><strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong></p>
+<ul style="margin-top: 0pt; margin-bottom: 0pt;">
+<li>Date formatting - <span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">I18n.l</span></li>
+</ul>
+<p>[[posterous-content:emwibxuFhrvvbeGGDmxB]]</p>
+<ul style="margin-top: 0pt; margin-bottom: 0pt;">
+<li>Number formatting - <span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">number_with_precision, number_to_percentage, number_with_delimiter</span></li>
+<li>Currency formatting -&nbsp;<span style="font-size: 14px; font-family: Courier New; background-color: transparent; vertical-align: baseline;">number_to_currency</span> 
+<ul>
+<li>NOTE: We went custom on this for explicit control over which currency symbol to display and what precision to use.</li>
+</ul>
+</li>
+</ul>
+<p>6) When it comes to sorting, databases can handle sorting text for multiple locales properly, but Ruby struggles. We suggest checking out&nbsp;<a href="https://github.com/jchris/icu4r">ICU4R</a> and/or&nbsp;<a href="http://engineering.twitter.com/2012/08/twittercldr-improving.html">TwitterCLDR</a> for help with sorting in Ruby, as well as, to solve many of the problems above.</p>
+<h2>Layout strategies</h2>
+<p>Variable length and namely longer strings (e.g., German tends to be 25% longer than English) will most likely cause you at least some layout problems. We&rsquo;ll talk more about strategies for dealing with variable string lengths in our upcoming posts for design/UX, iOS, and Android, but here are a few tips.</p>
+<ul>
+<li>Allow wrapping. Use truncation and an ellipsis as a fallback. The number of characters to allow before truncating such that things are understandable isn&rsquo;t always consistent so bear that in mind.</li>
+</ul>
+<p>[[posterous-content:zoioCBmzCnDwtbgAHzpm]]</p>
+<ul>
+<li>Guide your translators on maximum string length particularly when you need it to be short. If you can provide screenshots for context that&rsquo;s also very helpful.</li>
+</ul>
+<p>[[posterous-content:DBrmphlvruyuEdGuJmwI]]</p>
+<ul>
+<li>Avoid text embedded in images. Every time these change or need localization it is more manual (i.e., modify text in a layer in a Photoshop file and then generate the updated image), time consuming, and therefore more costly to handle these. Don&rsquo;t do it.</li>
+</ul>
+<h2>Add some tests</h2>
+<p>Add more test scenarios to sanity check that translations are rendering properly. Pick content that doesn&rsquo;t change frequently otherwise you&rsquo;ll be doing a lot of maintenance on these checks. Don&rsquo;t go too crazy particularly when you are leveraging things like the Rails i18n API which are already tested. Just do enough to give yourself confidence that things are working properly and that no one made a mistake like checking in a .yml file for the wrong locale under the wrong name.<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /> </strong></p>
+<h2>Payment/currency support</h2>
+<p>We&rsquo;ve got a custom abstraction layer for managing payments and currency so we&rsquo;re going to go a little light on the guidance here. At a minimum you need to ensure that you&rsquo;re working with a payment gateway that supports multiple currencies (we use<a href="https://www.braintreepayments.com/"> Braintree</a>) and that a particular form of payment supports a given currency. For example, we weren&rsquo;t able to set up AMEX support with Mexican Pesos.</p>
+<h2>Other miscellaneous things to factor in</h2>
+<p><strong>SMS and Twitter text</strong> - Keep the English as short as possible as staying under 140 (Twitter) or 160 (SMS) characters isn&rsquo;t always easy after it&rsquo;s been translated</p>
+<p><strong>Customer support phone numbers</strong> - You may need different phone numbers in different countries to eliminate or minimize costs for customers. This was more painful for us than it sounds. For example, we were able to secure International Freephone Number (ITFN) numbers that worked for a subset of European countries, but not all. We then had to secure local toll-free numbers for specific countries that didn&rsquo;t support ITFN and adjust customer support phone number handling and display in our apps, APIs, and web pages.</p>
+<p><strong>Address formats</strong> - Some countries have states/provinces and some do not</p>
+<ul>
+</ul>
+<h2>Key things to remember</h2>
+<p>Here are our top two pieces of advice.</p>
+<p>1) <strong>Keep your minimum size string to a sentence</strong> - Often times people are tempted to concatenate sub-strings together to get more reuse.<a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself"> DRY</a> is heavily emphasized in Rails, but this is one time where it can cause you problems. A couple simple examples of this are that in different languages words have gender and things may be phrased differently based on quantity.</p>
+<ul>
+</ul>
+<p style="padding-left: 30px;"><span style="text-decoration: underline;"><strong>GOOD FOR LOCALIZATION</strong></span></p>
+<p style="padding-left: 30px;">base: "A city tax of %{tax_amount} will be collected by the hotel at check-in."</p>
+<p style="padding-left: 30px;">per_person: "A city tax of %{tax_amount} <strong>per person</strong> will be collected by the hotel at check-in."</p>
+<p style="padding-left: 30px;">per_night: "A city tax of %{tax_amount} <strong>per night</strong> will be collected by the hotel at check-in."</p>
+<p style="padding-left: 30px;">per_person_per_night: "A city tax of %{tax_amount} <strong>per person per night</strong> will be collected by the hotel at check-in."</p>
+<p style="padding-left: 30px;"><span style="text-decoration: underline;"><strong>MAY CAUSE YOU PROBLEMS IF YOU TRY TO CONCATENATE</strong></span></p>
+<p style="padding-left: 30px;">base: "A city tax of %{tax_amount}"</p>
+<p style="padding-left: 30px;">per_person: "per person"</p>
+<p style="padding-left: 30px;">per_night: "per night"</p>
+<p style="padding-left: 30px;">collected_at_checking: "will be collected by the hotel at check-in."</p>
+<p>With legal strings (e.g., privacy policy and terms of service) we went with the largest contiguous chunks of content (typically paragraph) that we could get away with.</p>
+<p>2) <strong>Keep layout in your views versus your strings</strong> - This is less true for web views given the way that browsers handle whitespace, but we certainly had cases where emails and the mobile apps relied on spaces in strings for formatting. When you localize the length of your strings will vary and relying on spaces in specific positions is very brittle. It sounds simple, but our reality was that the aesthetic issues due to spaces made up approximately 10% of the issues logged by QA.</p>
+<ul>
+</ul>
+<p>[[posterous-content:FEGrClsdHsApazDiszjl]]</p>
+<ul>
+</ul>
+<h2>More helpful resources</h2>
+<ul>
+<li><a href="https://github.com/onomojo/i18n-country-translations">i18n-country-translations</a> gem</li>
+<li><a href="http://ruby-i18n.org/wiki">Ruby i18n wiki</a></li>
+</ul>
+<p>As always please let us know if you have more specific questions that we can try to help with. Up next, we&rsquo;ll offer up some specifics about what we had to do for out native Android and iOS apps.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

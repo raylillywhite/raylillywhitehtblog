@@ -1,0 +1,31 @@
+--- 
+categories: []
+
+layout: post
+published: true
+permalink: /pure-css3-buttons-in-mobile-webkit/index.html
+title: Pure CSS3 Buttons in Mobile WebKit
+---
+<p>[[posterous-content:DbjseIpecepIErpBBjCh]]<p /></p>
+<p><span style="font-size: medium;"><strong>Pure CSS3 buttons in Mobile WebKit</strong></span></p>
+<p>Recently, we introduced a lower friction pathway from the wilds of the world wide web into our app, HotelTonight. &nbsp;We see a lot of traffic coming on mobile devices and decided to try to put as much of the HotelTonight experience in front of visitors as possible.</p>
+<p>In addition to implementing a deal sample screen, which you can see by visiting our <a href="http://hoteltonight.com/" title="Hotel Tonight" target="_blank">homepage</a> with an iPhone, Android or Blackberry device, we have a signup page which allows users to quickly create an account from scratch or by linking up with their facebook profile.</p>
+<p>It was important for us to create a seemless transition between the web-based signup and the app. &nbsp;We're obscenely proud of our apps, and the faster we can show you why the happier we are. &nbsp;We approached the signup screen as a trailer for the native apps, and to accomplish that we needed to nail the native-looking elements.</p>
+<p>&nbsp;</p>
+<p><strong>Why pure CSS3?</strong></p>
+<p>There are quite a few techniques for emulating native iphone app controls, some incredibly creative, using images in different ways. &nbsp;This approach has a lot of advantages, primary among them being that you can capture all the subtlety employed in the native elements using tools well suited to the task (Photoshop, Fireworks, maybe Pixelmator).</p>
+<p>But there are drawbacks as well. &nbsp;Using images in almost any capacity can severely limit your design. &nbsp;Characteristics like color, opacity and dimension can be pegged down when using images.</p>
+<p>An image also increases the load time of your page, which is a first-order offense in mobile web development. &nbsp;Yes, it doesn't have to increase it by much, but we approached adding a resource to load as a last-resort. &nbsp;The signup page needed to be as fast to load as we could push it, and push it we did.</p>
+<p>&nbsp;</p>
+<p><strong>Implementation</strong></p>
+<p>One key aspect for our implementation of these iphone-style buttons was the semantic structure of our forms. &nbsp;We're pretty big into semantic markup, and as it happened that worked out very much in our favor. &nbsp;The following is a snippet that shows how the button is rendered into our form:</p>
+<p><script src="https://gist.github.com/1425583.js"></script></p>
+<p>&nbsp;</p>
+<p>You can see that the list item tag is classed as a "button", which we use to achieve the outset border look of the native button by styling the list item tag *as* the outset border. &nbsp;We probably would have needed an extra[neous] div tag around the button without this.</p>
+<p>You can see the effect below, first in the native implementation and then in our HTML5 implementation:</p>
+<p>[[posterous-content:GaIvCnIxyrdqFrGErchb]][[posterous-content:ooozrgaFHqrawrlblBvq]]</p>
+<p>&nbsp;</p>
+<p><strong>CSS</strong></p>
+<p>The styling leverages some key features of the CSS3 spec that are generally well supported across WebKit browsers including box shadows (and inset box shadows), linear gradients and text shadows.</p>
+<p><script src="https://gist.github.com/1431661.js"></script></p>
+<p>&nbsp;</p>

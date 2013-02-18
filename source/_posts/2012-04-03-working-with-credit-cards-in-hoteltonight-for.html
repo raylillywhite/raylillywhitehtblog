@@ -1,0 +1,81 @@
+--- 
+categories: []
+
+layout: post
+published: true
+permalink: /working-with-credit-cards-in-hoteltonight-for/index.html
+title: Working With Credit Cards In HotelTonight For iPad
+---
+<p>If you haven&rsquo;t heard, we <a href="http://itunes.apple.com/us/app/hotel-tonight-last-minute/id407690035?mt=8">released an iPad app</a>. It&rsquo;s pretty good too. We were confronted with quite a few interesting and unique challenges in bringing our iPhone app to the much larger screen of the iPad. Just blowing everything up so that the existing phone app used the entirety of the iPad&rsquo;s screen wasn&rsquo;t good enough. We needed to start with a blank slate and rebuild everything from scratch to make a true iPad experience that we could be proud of.</p>
+
+<p>One area that received quite a bit of attention was the interface for entering and selecting a credit card to use during a booking. Since we sell a physical good (a hotel room reservation), we don&rsquo;t use the in-app purchase frameworks that Apple provides for allowing upgrades and other purchases in the other apps you love.</p>
+
+<p>The problem with credit card input is that no one enjoys doing it. It&rsquo;s a utilitarian chore entering a string of numbers, an expiration date and a CVV whether you&rsquo;re on the desktop or mobile. Our primary goal with creating this new card entry experience was to make it not only easy to use, but also fun.</p>
+
+<p>For comparisons sake, this is what we started with on the iPhone:</p>
+
+<p><img src="http://getfile0.posterous.com/getfile/files.posterous.com/temp-2012-04-03/xGawDAvBDvsJtshiyatAHecrDBByEEoomozeyAnkknelEycjgmlfovgtvAqh/iphone_cards.png" alt="iPhone Card Entry" /></p>
+
+<p>Certainly a serviceable UI, but not something that we wanted to just import into the iPad UI. For one, having a full size table view in the middle of our booking workflow would look strangely out of place. Second, we tried really hard to minimize the number of popovers in the interface. Popovers are useful for supplemental information, but providing them as part of the main workflow in the app wouldn&rsquo;t be a fit for the experience we were trying to provide our users.</p>
+
+<h2>Research/Inspiration</h2>
+
+<p>Before we went down the path of building our own card implementation, we spent some time downloading different mobile apps and seeing how they did credit card entry. The first place to look of course is at our friends at <a href="http://squareup.com">Square</a>. A company built around taking mobile payments is an easy place to look. We also were incredibly impressed by our same day booking buddies at <a href="https://www.getwillcall.com/">WillCall</a>. Their entire app is impressive, but their card entry UI is what caught our eye the most.</p>
+
+<p>What both Square and WillCall have in common is the single-line entry paradigm. Once you enter a credit card number, your cursor automatically shifts to the next field, followed by the next until you&rsquo;re ready to submit. There is inline validation along the way to ensure the user isn&rsquo;t hitting the authentication servers with obviously bad data such as an expired card or an invalid card number.</p>
+
+<h2>What We Ended Up With</h2>
+
+<p>For the first version of HotelTonight for iPad, this is what we shipped:</p>
+
+<p><img src="http://getfile9.posterous.com/getfile/files.posterous.com/temp-2012-04-03/avozleyDqeElcedGGsahpcEbfvFpvggDnpjkEAdwGGqIEJpeweIjnqtGIDDa/card1.png" alt="Card Entry State" /></p>
+
+<p>There are three states to our card selection user interface:</p>
+
+<ol>
+<li>The card entry state (above)</li>
+<li>The card validation state (below)</li>
+<li>The card selection state (the screenshot below that).</li>
+</ol>
+
+
+<p>The card entry state has two fields: the card number and card expiration. The card number field is just a vanilla <code>UITextField</code>, but we do a bit of massaging of the input as the user types. Most noteably, we have a <code>UITextFieldTextDidChangeNotification</code> handler attached that does three things:</p>
+
+<ol>
+<li>Ensure that we have a valid length card number</li>
+<li>Ensure that the card number matches the type of cards we support: Visa, MasterCard, American Express and Discover.</li>
+<li>Ensure the card passes a <a href="http://en.wikipedia.org/wiki/Luhn_algorithm">luhn validation</a></li>
+</ol>
+
+
+<p>If the card number is validated, we automatically transition the user to the expiration date field so they can continue typing. No need to tap a next button or manually tap on the expiration field. Upon entering a successful expiration date, we transition to the  validation state.</p>
+
+<p><img src="http://getfile4.posterous.com/getfile/files.posterous.com/temp-2012-04-03/CDtAFgCwzpGjHudBsCpmwErjAcaAhgonFxpuvsfepidhxIxafaJJGwDgmsJD/card2.png" alt="Card Validation State" /></p>
+
+<p>The validation state transition is where we highlight what type of card the user has entered as well as providing the last four digits of their card number. Tapping on either of those transitions back to the card entry state. The user can also backspace from the CVV field to get back there. More on that later.</p>
+
+<p>Once a card is entered, it shows in in our credit card tray.</p>
+
+<p><img src="http://getfile9.posterous.com/getfile/files.posterous.com/temp-2012-04-03/BGydlczksqviHpqIvpnJDFrgztHtyAjFHoeAaxvvtJqAbbfqHejDsCFyhrjj/card3.png" alt="Card Selection State" /></p>
+
+<p>The currently selected card has a full-color treatment while the others are desaturated. If you have more than a few cards, the picker turns into a scrollable control that lets you choose between the different ones.</p>
+
+<h2>The Little Details</h2>
+
+<p>We obsess over the little details at HT. The first time we played with a functional implementation of the card picker control, we were annoyed that deleting the last character in a text field didn&rsquo;t push back to the previous text field or picker state. It turns out this isn&rsquo;t as easy as we had hoped.</p>
+
+<p>Whenever you make a change to a <code>UITextField</code>, you have the opportunity to perform an action using the <code>- textField:shouldChangeCharactersInRange:replacementString:</code> delegate method. Unfortunately it is not called if there are no characters in a text field. To work around this, we decided to insert a zero width space (\u200B for the Unicode fans in the house) at the beginning of each text field. <code>UITextField</code> won&rsquo;t render the space, but it is capable of being deleted, and subsequently firing our delegate method. We then check if the delete key is being pressed while the text field only contains that zero width space. If it is, we transition to the previous field.</p>
+
+<h2>Things We Waffled Over</h2>
+
+<p>In the run-up to shipping our shiny new iPad app, we gave everyone in the office an opportunity to test out the application. Tests like this are always eye opening because developer eyes tend to glaze over after staring at the same piece of functionality for days and weeks on end. We miss stuff, or assume other things are more obvious than they really are.</p>
+
+<p>The first thing our user tests uncovered was that people didn&rsquo;t know what to do with the card picker in its default selection state if they didn&rsquo;t have any cards already associated with their account. To alleviate this, we default to showing the picker to the user in its card entry state if there are no credit cards associated with the currently logged in user.</p>
+
+<p>We also decided to add a bit of help text underneath each the entry fields to further guide the user along. Each text field has placeholder text, but in the case of fields like CVV we were concerned some users might not know what a CVV was. The help text offers a bit of guidance.</p>
+
+<h2>Moving Forward</h2>
+
+<p>As with all things software, we have a few ideas of how we want to enhance the card picker going forward. For one, users can&rsquo;t currently edit or delete cards. There are also some additional treatments and animations we&rsquo;d like to add to the card tray as you transition from the selection state into the new card input.</p>
+
+<p>You can check out the  card picker in action by downloading our new iPad app <a href="itunes">on the App Store</a>.</p>
