@@ -148,7 +148,7 @@ self.emailField.text = HTStr(@"S_Email", @"Email", @"Placeholder for login email
 With this we have the option of changing just the English string, to prevent retranslation and breaking links to existing translations. Or, we can change the key and the value to trigger a retranslation if the meaning of the English string has changed at all. There are a couple downsides to this approach though. Using our macro caused genstrings to not find our strings, so we had to hack together a [script for generating our strings file](https://gist.github.com/raylillywhite/4984291). And you could accidentally use the same key for two different values. Fortunately, this is caught by genstrings:
 
 ```
-Key "S_Password" used with multiple values. Value "Password" kept. Value "Email" ignored.
+Key "S_Email" used with multiple values. Value "Email" kept. Value "E-mail" ignored.
 ```
 
 In hindsight though, we probably would have been fine with using the simple `NSLocalizedString(key, comment)`. Smartling makes it pretty easy for us to get our strings files updated by the translators, so if keys were to change anytime we change the English text, that wouldn't be a big problem. And you could always selectively use `NSLocalizedStringWithDefaultValue` in that case.
