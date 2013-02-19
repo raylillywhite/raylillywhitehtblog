@@ -4,15 +4,17 @@ title: "The Nitty Gritty of iOS Internationalization and Localization"
 date: 2013-02-18 22:30
 comments: true
 categories: 
-published: false
 ---
 
-The best way to prevent hating your job is to use the Apple provided localization tools from day one, even if you have no plans to localize your app. From day one you should be using:
-* NSLocalizedString
-* NSDateFormatter
-* NSNumberFormatter
+The best way to prevent hating your job when your company grows is to use the Apple provided localization tools from day one, even if you have no plans to localize your app. Maybe it's not the best way, but it's certainly required. From day one you should be using:
+
+* `NSLocalizedString`
+* `NSDateFormatter`
+* `NSNumberFormatter`
 * `[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem]`
+
 From day one, you should not be:
+
 * Pluralizing by adding an 's' (Safe yourself some trouble and use separate localized strings for plural and singular nouns)
 * Using magic numbers to set static sizes for views (specifically views with text)
 * Using '$' or other currency symbols in string formats
@@ -21,13 +23,38 @@ Let's start with the easier ones.
 ## NSNumberFormatter
 NSNumberFormatter's most important use in localization is with display currencies. Users will have a different expectation of how a given currency is displayed depending on what country they are from. A price in US Dollars could be shown as "$50.00", "US$50.00", "50,00 $US", etc. 
 
-NSNumberFormatter's NSNumberFormatterCurrencyStyle allows you to let Apple decide which one to show the user, which gives them a consistent experience across all of their apps. Showing the full currency code (USD) would also work, and may be useful for certain detailed views like a verbose receipt, but we chose to stick with the more minimal format that NSNumberFormatter provides.
+`NSNumberFormatter`'s `NSNumberFormatterCurrencyStyle` allows you to let Apple decide which one to show the user, which gives them a consistent experience across all of their apps. Showing the full currency code (USD) would also work, and may be useful for certain detailed views like a verbose receipt, but we chose to stick with the more minimal format that NSNumberFormatter provides.
 Example:
-{% gist 4983594 %}
+```objc
+NSNumberFormatter *currencyFormatter = [[NSNumberFormatter alloc] init];
+[currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+[currencyFormatter setCurrencyCode:currencyCode];
+[currencyFormatter setMaximumFractionDigits:0];
+[currencyFormatter setRoundingMode:NSNumberFormatterRoundHalfUp];
+return [currencyFormatter stringFromNumber:@(amount)];
+```
 
 ### Caching and Thread Safety
 NSNumberFormatters and NSDateFormatters are slow to initialize and configure, so you generally want to cache any formatters that you can use in multiple places. Unfortunately they aren't thread-safe though, so we keep separate formatters per thread:
-https://gist.github.com/c326679bd05fcb31cfe1
+```objc
+NSString *HTCurrencyString(double amount, NSString *currencyCode)
+{
+    static NSString *currencyFormatterKey = @"HTCurrencyFormatter";
+    NSNumberFormatter *currencyFormatter = [[NSThread currentThread] threadDictionary][currencyFormatterKey];
+    if (currencyFormatter == nil) 
+    {
+        currencyFormatter = [[NSNumberFormatter alloc] init];
+        [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [currencyFormatter setLocale:[NSLocale currentLocale]];
+ 
+        [[NSThread currentThread] threadDictionary][currencyFormatterKey] = currencyFormatter;
+    }
+    [currencyFormatter setCurrencyCode:currencyCode];
+    [currencyFormatter setMaximumFractionDigits:0];
+    [currencyFormatter setRoundingMode:NSNumberFormatterRoundHalfUp];
+    return [currencyFormatter stringFromNumber:@(amount)];
+}
+```
 
 ## NSDateFormatter
 Using date formatters involves a couple of additional tricks, beyond the caching necessary for both date and number formatters. There are many built-in date formatter styles that we made use of with cached formatters like:
