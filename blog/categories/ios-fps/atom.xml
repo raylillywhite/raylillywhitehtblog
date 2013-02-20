@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ios fps | My Octopress Blog]]></title>
-  <link href="http://raylillywhite.github.com/blog/categories/ios-fps/atom.xml" rel="self"/>
-  <link href="http://raylillywhite.github.com/"/>
-  <updated>2013-02-19T16:28:46-08:00</updated>
-  <id>http://raylillywhite.github.com/</id>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/blog/categories/ios-fps/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/"/>
+  <updated>2013-02-19T16:31:47-08:00</updated>
+  <id>http://raylillywhite.github.com/raylillywhitehtblog/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[State-aware cached rasterization in iOS for epic performance]]></title>
-    <link href="http://raylillywhite.github.com/asynchronous-state-aware-component-rasterizat/index.html"/>
+    <link href="http://raylillywhite.github.com/raylillywhitehtblog/asynchronous-state-aware-component-rasterizat/index.html"/>
     <updated>2012-12-07T00:00:00-08:00</updated>
-    <id>http://raylillywhite.github.com/asynchronous-state-aware-component-rasterizat/asynchronous-state-aware-component-rasterizat</id>
+    <id>http://raylillywhite.github.com/raylillywhitehtblog/asynchronous-state-aware-component-rasterizat/asynchronous-state-aware-component-rasterizat</id>
     <content type="html"><![CDATA[<p>Creating custom programmatically-drawn components in iOS is a common problem in iOS design and development. &nbsp;However, the path toward optimization for these components becomes complicated very quickly - and there is a lot of conflicting advice out there. &nbsp;For the most part, people end up applying the CALayer shouldRasterize property as a cure-all for performance issues. &nbsp;However, CA rasterization is only as clever as it can be - it flushes the raster every time an instance is redrawn. &nbsp;Often times, bundled assets are used instead. I think there is a lot of value in building dynamic components rather than filling your app binary with bundled assets, so I decided to dig deeper and develop a more efficient pattern.</p>
 
 

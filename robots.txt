@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://raylillywhite.github.com/sitemap.xml 
+Sitemap: http://raylillywhite.github.com/raylillywhitehtblog/sitemap.xml 

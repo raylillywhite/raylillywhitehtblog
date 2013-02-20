@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: robolectric | My Octopress Blog]]></title>
-  <link href="http://raylillywhite.github.com/blog/categories/robolectric/atom.xml" rel="self"/>
-  <link href="http://raylillywhite.github.com/"/>
-  <updated>2013-02-19T16:28:46-08:00</updated>
-  <id>http://raylillywhite.github.com/</id>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/blog/categories/robolectric/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/"/>
+  <updated>2013-02-19T16:31:47-08:00</updated>
+  <id>http://raylillywhite.github.com/raylillywhitehtblog/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Writing Android Unit-Tests With Robolectric]]></title>
-    <link href="http://raylillywhite.github.com/writing-android-unit-tests-with-robolectric/index.html"/>
+    <link href="http://raylillywhite.github.com/raylillywhitehtblog/writing-android-unit-tests-with-robolectric/index.html"/>
     <updated>2012-04-23T00:00:00-07:00</updated>
-    <id>http://raylillywhite.github.com/writing-android-unit-tests-with-robolectric/writing-android-unit-tests-with-robolectric</id>
+    <id>http://raylillywhite.github.com/raylillywhitehtblog/writing-android-unit-tests-with-robolectric/writing-android-unit-tests-with-robolectric</id>
     <content type="html"><![CDATA[<p>Until recently, I&rsquo;ve been unable to configure a <a href="http://pivotal.github.com/robolectric/" title="Robolectric" target="_self">Robolectric</a> project that can easily be shared across a team and integrated with <a href="http://jenkins-ci.org/" title="Jenkins CI" target="_self">Jenkins CI</a> without the use of Maven. I mentioned this in a previous post, and have asked for assistance on Pivotal&rsquo;s <a href="http://groups.google.com/group/robolectric?pli=1" title="Robolectric Google Group" target="_self">Robolectric Google Group</a> a handful of times. There are several jar files that need to be referenced, and dependencies between the test and main Android projects and (without the use of Maven) this is difficult to configure and move around between teammates.</p>
 
 

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ruby | My Octopress Blog]]></title>
-  <link href="http://raylillywhite.github.com/blog/categories/ruby/atom.xml" rel="self"/>
-  <link href="http://raylillywhite.github.com/"/>
-  <updated>2013-02-19T16:28:46-08:00</updated>
-  <id>http://raylillywhite.github.com/</id>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/"/>
+  <updated>2013-02-19T16:31:47-08:00</updated>
+  <id>http://raylillywhite.github.com/raylillywhitehtblog/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Killing Stale or Stuck Resque Jobs]]></title>
-    <link href="http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/index.html"/>
+    <link href="http://raylillywhite.github.com/raylillywhitehtblog/killing-stale-or-stuck-resque-jobs/index.html"/>
     <updated>2012-08-17T00:00:00-07:00</updated>
-    <id>http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/killing-stale-or-stuck-resque-jobs</id>
+    <id>http://raylillywhite.github.com/raylillywhitehtblog/killing-stale-or-stuck-resque-jobs/killing-stale-or-stuck-resque-jobs</id>
     <content type="html"><![CDATA[<p>We use Resque (<a href="https://github.com/defunkt/resque)">https://github.com/defunkt/resque)</a> for processing our background jobs in Rails. We initially implemented Resque to send a few emails, but have since expanded our use greatly.</p>
 
 
@@ -64,9 +64,9 @@
   
   <entry>
     <title type="html"><![CDATA[Checking If Rake Was Called With Verbose Or Trace]]></title>
-    <link href="http://raylillywhite.github.com/checking-if-rake-was-called-with-verbose-or-t/index.html"/>
+    <link href="http://raylillywhite.github.com/raylillywhitehtblog/checking-if-rake-was-called-with-verbose-or-t/index.html"/>
     <updated>2012-01-24T00:00:00-08:00</updated>
-    <id>http://raylillywhite.github.com/checking-if-rake-was-called-with-verbose-or-t/checking-if-rake-was-called-with-verbose-or-t</id>
+    <id>http://raylillywhite.github.com/raylillywhitehtblog/checking-if-rake-was-called-with-verbose-or-t/checking-if-rake-was-called-with-verbose-or-t</id>
     <content type="html"><![CDATA[<p>Recently we needed to check whether a rake task was called with the --verbose or --trace flags.</p>
 
 

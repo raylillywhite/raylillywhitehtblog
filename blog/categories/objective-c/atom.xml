@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: objective-c | My Octopress Blog]]></title>
-  <link href="http://raylillywhite.github.com/blog/categories/objective-c/atom.xml" rel="self"/>
-  <link href="http://raylillywhite.github.com/"/>
-  <updated>2013-02-19T16:28:46-08:00</updated>
-  <id>http://raylillywhite.github.com/</id>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/blog/categories/objective-c/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/"/>
+  <updated>2013-02-19T16:31:47-08:00</updated>
+  <id>http://raylillywhite.github.com/raylillywhitehtblog/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Handling multiple delegates in iOS]]></title>
-    <link href="http://raylillywhite.github.com/handling-multiple-delegates-in-ios/index.html"/>
+    <link href="http://raylillywhite.github.com/raylillywhitehtblog/handling-multiple-delegates-in-ios/index.html"/>
     <updated>2012-10-24T00:00:00-07:00</updated>
-    <id>http://raylillywhite.github.com/handling-multiple-delegates-in-ios/handling-multiple-delegates-in-ios</id>
+    <id>http://raylillywhite.github.com/raylillywhitehtblog/handling-multiple-delegates-in-ios/handling-multiple-delegates-in-ios</id>
     <content type="html"><![CDATA[<p>Sometimes, the delegate pattern in iOS just doesn't fit with a class heirarchy or design, specifically when you find yourself wanting to assign multiple delegates to a single source. For these cases, the approach usually taken is to use the notification center. This is an approach I have used in the past, but it always felt like a cop-out. Instead, I decided to build a delegate proxy using an NSProxy subclass. It takes a list of target delegates, and operates on two simple rules:</p>
 
 

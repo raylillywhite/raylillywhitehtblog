@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: iOS | My Octopress Blog]]></title>
-  <link href="http://raylillywhite.github.com/blog/categories/ios/atom.xml" rel="self"/>
-  <link href="http://raylillywhite.github.com/"/>
-  <updated>2013-02-19T16:28:46-08:00</updated>
-  <id>http://raylillywhite.github.com/</id>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/"/>
+  <updated>2013-02-19T16:31:47-08:00</updated>
+  <id>http://raylillywhite.github.com/raylillywhitehtblog/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Nitty Gritty of iOS Internationalization and Localization]]></title>
-    <link href="http://raylillywhite.github.com/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/"/>
+    <link href="http://raylillywhite.github.com/raylillywhitehtblog/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/"/>
     <updated>2013-02-18T22:30:00-08:00</updated>
-    <id>http://raylillywhite.github.com/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization</id>
+    <id>http://raylillywhite.github.com/raylillywhitehtblog/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization</id>
     <content type="html"><![CDATA[<p>The best way to prevent hating your job when your company grows is to use the Apple provided localization tools from day one, even if you have no plans to localize your app. Maybe it's not the best way, but it's certainly required. From day one you should be using:</p>
 
 <ul>

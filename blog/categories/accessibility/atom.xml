@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: accessibility | My Octopress Blog]]></title>
-  <link href="http://raylillywhite.github.com/blog/categories/accessibility/atom.xml" rel="self"/>
-  <link href="http://raylillywhite.github.com/"/>
-  <updated>2013-02-19T16:28:46-08:00</updated>
-  <id>http://raylillywhite.github.com/</id>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/blog/categories/accessibility/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/raylillywhitehtblog/"/>
+  <updated>2013-02-19T16:31:47-08:00</updated>
+  <id>http://raylillywhite.github.com/raylillywhitehtblog/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Improving Accessibility Support In HotelTonight For iOS ]]></title>
-    <link href="http://raylillywhite.github.com/improving-accessibility-support-in-hoteltonig/index.html"/>
+    <link href="http://raylillywhite.github.com/raylillywhitehtblog/improving-accessibility-support-in-hoteltonig/index.html"/>
     <updated>2012-01-12T00:00:00-08:00</updated>
-    <id>http://raylillywhite.github.com/improving-accessibility-support-in-hoteltonig/improving-accessibility-support-in-hoteltonig</id>
+    <id>http://raylillywhite.github.com/raylillywhitehtblog/improving-accessibility-support-in-hoteltonig/improving-accessibility-support-in-hoteltonig</id>
     <content type="html"><![CDATA[<p>I recently joined the HotelTonight development team to help improve and further our existing iOS app as well as building some even cooler stuff down the road. One of the first things I wanted to tackle was ensuring that our iOS app offers proper accessibility support for users that take advantage of Apple&rsquo;s excellent <a href="http://www.apple.com/accessibility/voiceover/">VoiceOver technology</a>.</p>
 
 
