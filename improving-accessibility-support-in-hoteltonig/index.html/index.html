@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Improving Accessibility Support In HotelTonight For iOS  - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="I recently joined the HotelTonight development team to help improve and further our existing iOS app as well as building some even cooler stuff down &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://raylillywhite.github.com/improving-accessibility-support-in-hoteltonig/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:raylillywhite.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Improving Accessibility Support in HotelTonight for iOS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-12T00:00:00-08:00" pubdate data-updated="true">Jan 12<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I recently joined the HotelTonight development team to help improve and further our existing iOS app as well as building some even cooler stuff down the road. One of the first things I wanted to tackle was ensuring that our iOS app offers proper accessibility support for users that take advantage of Apple&rsquo;s excellent <a href="http://www.apple.com/accessibility/voiceover/">VoiceOver technology</a>.</p>
+<p>VoiceOver is amazing because it enables vision-impaired users to use a device that has just a single physical button like the iPhone or iPad almost as easily as someone with full use of their sight. Tapping a button or label reads aloud just enough information for the user to perform the action intended.</p>
+<p>Beyond the noble reasons for improving the accessibility of the HotelTonight iOS app, it will also help us as we start adopting automated testing and continuous integration as part of our build workflow. We&rsquo;re still evaluating what solution we will adopt, but each one we&rsquo;ve analyzed makes extensive use of Apple&rsquo;s accessibility APIs to reference parts of your interface. Bonus!</p>
+<p>Apple gives you a lot for free if you use the standard widgets that are included with the UIKit frameworks. If you stray from the standard widgets and build your own controls, they also make it relatively simple to adopt their <code>UIAccessibility</code> informal protocol.</p>
+<h2>Accessibility Testing and the Almighty Triple-Tap Shortcut</h2>
+<p>Before you can actually begin working on improving the accessibility of your app, you need to see where it stands in its current incarnation. The easiest way to do this is by enabling VoiceOver on your own device, running through each screen and seeing what works and what needs to be fixed.</p>
+<p>If you are going to be working frequently with VoiceOver (and you will be if you plan to do this), you can quickly enable or disable it via a triple-tap of the Home button. Triple-tapping is not enabled by default, but you can turn this feature on by performing the following steps on your device:</p>
+<ol>
+<li>Launch the Settings app.</li>
+<li>Tap on General.</li>
+<li>Tap on Accessibility.</li>
+<li>Scroll down to the bottom and set &ldquo;Triple-click Home&rdquo; to &ldquo;Toggle VoiceOver&rdquo;.</li>
+</ol>
+<p>[[posterous-content:jfkabihdoyzGhwkedEJo]]</p>
+<p>The iOS simulator also has an Accessibility Inspector you can enable that will show you traits, labels and other attributes related to accessibility. I used it a few times, but generally found it easier to do all the testing on a device with VoiceOver enabled. Just make sure you&rsquo;ve got a set of headphones or your co-workers may try to smash your iPhone to silence the repeated quips of the sweet VoiceOver lady.</p>
+<h2>Table Cell Improvements</h2>
+<p>Our accessibility testing showed that the existing version of HotelTonight for iOS had a good head start thanks to how much free stuff Apple gives in terms of VoiceOver support in the frameworks. Our tab bar items each had labels that were properly read aloud. Our hotel and booking table cells each read out most of the relevant information to the user as they were browsing through the app.</p>
+<p>[[posterous-content:sHHBljfwktsbwCyufnGa]]</p>
+<p>In the case of our hotel cells, I wanted to make sure that all of the information that a non-VoiceOver user could see was accessible to anyone. In our case, that meant reading aloud which category the hotel was rather than just displaying an image. I also wanted to make sure that the accessibility label had a good delivery to it rather than being several short, robotic sounding sentences. When you tap on one our the hotel cells, it now reads something along the lines of:</p>
+<blockquote class="posterous_short_quote">
+<p>Hotel Rex, a charming hotel. $69 dollars. Regularly $109 dollars. Available for one night. 2 Rooms Left.</p>
+</blockquote>
+<p>Adding this was trivial.</p>
+<p>In our UITableViewCell subclass (<code>HTHotelCell</code>) I added two methods that are part of the <code>UIAccessibility</code> informal protocol: <code>isAccessibilityElement</code> and <code>accessibilityLabel</code>. The <code>isAccessibilityElement</code> method just returns YES to let VoiceOver know that our table cell is indeed something that should be supported. The <code>accessibilityLabel</code> is where we define what is spoken by the lovely VoiceOver lady. We adjust that output based on room availability, how many nights are available to book and whether the hotel has sold out for the evening.</p>
+<h2>Detail Tab Improvements</h2>
+<p>When a user taps on a specific hotel to check out the details of it, we have a segmented control along the top with separate segments for &ldquo;Book&rdquo;, &ldquo;Info&rdquo; and &ldquo;Map&rdquo;. We use the open source <code>SSSegmentedControl</code> to build our stylized view and what I discovered was that it was completely inaccessible to anyone using VoiceOver.</p>
+<p>[[posterous-content:HrnFzuJxmBiDBrqoIjEk]]</p>
+<p>With a standard segmented control such as the one in the YouTube app&rsquo;s &ldquo;Most Viewed&rdquo; tab, each segment is individually tappable and will have its label read aloud. Unfortunately for us, our custom control didn&rsquo;t allow any sort selection under VoiceOver. This meant our VoiceOver users could only work within the &ldquo;Book&rdquo; tab and would never be able to see our additional information about the hotel or view it on a map from within the app.</p>
+<p>Apple has a second informal protocol called <code>UIAccessibilityContainer</code> to handle situations like this. <code>UIAccessibilityContainer</code> allows developers to group separate <code>UIAccessibilityElements</code> that are part of a single visual control, but have different selectable parts. The <code>UIAccessibilityContainer</code> protocol has three required methods to implement:</p>
+<ol>
+<li><code>accessibilityElementCount</code> returns the number of <code>UIAccessibilityElements</code>.</li>
+<li><code>accessibilityElementAtIndex:</code> returns a specific instance of  <code>UIAccessibilityElement</code>.</li>
+<li><code>indexOfAccessibilityElement:</code> returns an NSInteger related to a specific <code>UIAccessibilityElement</code>.</li>
+</ol>
+<p>As part of <code>UIAccessibilityContainer</code> you are also required to set the <code>isAccessibilityElement</code> method we discussed earlier to NO. Since each individual element will be selectable, the parent control shouldn&rsquo;t be otherwise the others wouldn&rsquo;t be tappable.</p>
+<p>To get the tabs selectable in VoiceOver, we sprinkled a few extra lines of code into the <code>drawRect:</code> method of <code>SSSegmentedControl</code>. This snippet creates the <code>UIAccessibilityElement</code> for each tab and adds it to a separate <code>accessibleElements</code> array that we then work with in the protocol methods from above.</p>
+<p><script src="https://gist.github.com/1586076.js"></script></p>
+<p>You can see our fork of SSToolkit with the accessibility improvements on our <a href="https://github.com/hoteltonight/sstoolkit">Github profile</a>.</p>
+<h2>Night Selector Improvements</h2>
+<p>Another piece of our hotel detail view controller needed a bit of improvement in VoiceOver: our <code>HTNightSelectorView</code> control. When deciding to book a specific hotel, we have a custom control that will slide up with the number of nights you are able to book (usually between 1 and 5 nights). Each of those options are rendered as a separate instance of a <code>UIView</code> subclass called <code>HTNightsRow</code>.</p>
+<p>[[posterous-content:GaukloerjAthfoximusm]]</p>
+<p>The previous version of the HotelTonight app would allow a VoiceOver user expose the custom night selection UI, but they couldn&rsquo;t actually change the number during the booking experience. Instead the number of nights and the price were shown as separate labels that were read aloud.</p>
+<p>To workaround this we set each instance of <code>HTNightsRow</code> to be an accessible element by setting  <code>isAccessibilityElement</code> to YES and adjusting the <code>accessibilityLabel</code> to output the number of nights and the price as a single string. In situtations where a specific number of nights were unavailable, non-VoiceOver users are shown &ldquo;N/A&rdquo; rather than a price. VoiceOver reads that as &ldquo;N Slash A&rdquo;  <code>accessibilityLabel</code> will instead read that out as &ldquo;not available&rdquo;.</p>
+<p>We also adjusted each <code>HTNightsRow</code> instance to have a custom set of <code>UIAccessibilityTraits</code>. Traits are what help VoiceOver understand what each specific view or control is capable of doing. Apple offers a variety of different traits you can apply to your controls. By default we wanted to treat each <code>HTNightsRow</code> row as a tappable button that contains static text and allows manipulation by the user.</p>
+<p>If the night option is unavailable, we also set the <code>UIAccessibilityTraitNotEnabled</code> trait. Here&rsquo;s the snippet that does that.</p>
+<p><script src="https://gist.github.com/1586083.js"></script></p>
+<h2>Useful Links</h2>
+<p>These were the links I frequently referenced working on this project.</p>
+<ul>
+<li><a href="http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/iPhoneAccessibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008785-CH1-SW1">Apple&rsquo;s Accessibility Programming Guide for iOS</a></li>
+<li><a href="http://mattgemmell.com/2010/12/19/accessibility-for-iphone-and-ipad-apps/">Matt &lsquo;Legend&rsquo; Gemmell&rsquo;s Accessibility Guide</a></li>
+<li><a href="http://developer.apple.com/library/ios/documentation/uikit/reference/UIAccessibility_Protocol/">UIAccessibility Protocol Reference</a></li>
+<li><a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIAccessibilityContainer_Protocol/Introduction/Introduction.html">UIAccessibilityContainer Protocol Reference</a></li>
+<li><a href="http://developer.apple.com/library/ios/documentation/uikit/reference/UIAccessibilityElement_Class/Reference/Reference.html">UIAccessibilityElement Protocol Reference</a></li>
+</ul>
+<p>In all, getting the HotelTonight iOS app up and properly running with VoiceOver enabled was a two-day project. It wasn&rsquo;t the most difficult problem we have ever tackled, but it could be one of the most rewarding. We want HotelTonight to be usable by anyone with an iPhone and we can happily say that our newest version is.</p>
+<p>You can check out our improved VoiceOver support in the upcoming 2.2 release of&nbsp;<a href="http://itunes.apple.com/us/app/hotel-tonight-last-minute/id407690035?mt=8">HotelTonight for iOS</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-12T00:00:00-08:00" pubdate data-updated="true">Jan 12<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/accessibility/'>accessibility</a>, <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/voiceover/'>voiceover</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://raylillywhite.github.com/improving-accessibility-support-in-hoteltonig/index.html" data-via="" data-counturl="http://raylillywhite.github.com/improving-accessibility-support-in-hoteltonig/index.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/pure-css3-buttons-in-mobile-webkit/index.html" title="Previous Post: Pure CSS3 Buttons in Mobile WebKit">&laquo; Pure CSS3 Buttons in Mobile WebKit</a>
+      
+      
+        <a class="basic-alignment right" href="/checking-if-rake-was-called-with-verbose-or-t/index.html" title="Next Post: Checking If Rake Was Called With Verbose Or Trace">Checking If Rake Was Called With Verbose Or Trace &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/">The Nitty Gritty of iOS Internationalization and Localization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/lets-stop-making-our-users-type-gmailcom/index.html">Let's stop making our users type @gmail.com</a>
+      </li>
+    
+      <li class="post">
+        <a href="/174411869/index.html">Internationalization and localization - Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/internationalization-and-localization-plannin/index.html">Internationalization and localization - Planning, tools, and process</a>
+      </li>
+    
+      <li class="post">
+        <a href="/asynchronous-state-aware-component-rasterizat/index.html">State-aware cached rasterization in iOS for epic performance</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

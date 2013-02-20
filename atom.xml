@@ -1,99 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
-
-  
-  <meta name="description" content="The best way to prevent hating your job when your company grows is to use the Apple provided localization tools from day one, even if you have no &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://raylillywhite.github.com/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
-  
-    <h2>A blogging framework for hackers.</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:raylillywhite.github.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://raylillywhite.github.com/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/"/>
+  <updated>2013-02-19T16:28:46-08:00</updated>
+  <id>http://raylillywhite.github.com/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
     
-      <h1 class="entry-title"><a href="/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/">The Nitty Gritty of iOS Internationalization and Localization</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-
-
-<time datetime="2013-02-18T22:30:00-08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The best way to prevent hating your job when your company grows is to use the Apple provided localization tools from day one, even if you have no plans to localize your app. Maybe it&#8217;s not the best way, but it&#8217;s certainly required. From day one you should be using:</p>
+  <entry>
+    <title type="html"><![CDATA[The Nitty Gritty of iOS Internationalization and Localization]]></title>
+    <link href="http://raylillywhite.github.com/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/"/>
+    <updated>2013-02-18T22:30:00-08:00</updated>
+    <id>http://raylillywhite.github.com/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization</id>
+    <content type="html"><![CDATA[<p>The best way to prevent hating your job when your company grows is to use the Apple provided localization tools from day one, even if you have no plans to localize your app. Maybe it&#8217;s not the best way, but it&#8217;s certainly required. From day one you should be using:</p>
 
 <ul>
 <li><code>NSNumberFormatter</code></li>
@@ -305,42 +230,15 @@ Example:</p>
 
 
 <p>In hindsight though, we probably would have been fine with using the simple <code>NSLocalizedString(key, comment)</code>. Smartling makes it pretty easy for us to get our strings files updated by the translators, so if keys were to change anytime we change the English text, that wouldn&#8217;t be a big problem. And you could always selectively use <code>NSLocalizedStringWithDefaultValue</code> in that case.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/lets-stop-making-our-users-type-gmailcom/index.html">Let&#8217;s Stop Making Our Users Type @gmail.com</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-25T00:00:00-08:00" pubdate data-updated="true">Jan 25<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>At HotelTonight, we want our hotel deals to be as accessible as possible to our customers, which means reducing time spent doing tedious things such as signing up and logging in. &nbsp;Accordingly, it occurred to us recently that we could save many of our customer a few seconds if we autocomplete their email domain while they&#8217;re typing. At the time of this writing, over 75% of our customers&#8217; email addresses are from just&nbsp;<em>five</em>&nbsp;domains (gmail.com, yahoo.com, hotmail.com, aol.com, comcast.net). so we should be able to make a pretty accurate educated guess.</p>
+  <entry>
+    <title type="html"><![CDATA[Let's stop making our users type @gmail.com]]></title>
+    <link href="http://raylillywhite.github.com/lets-stop-making-our-users-type-gmailcom/index.html"/>
+    <updated>2013-01-25T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/lets-stop-making-our-users-type-gmailcom/lets-stop-making-our-users-type-gmailcom</id>
+    <content type="html"><![CDATA[<p>At HotelTonight, we want our hotel deals to be as accessible as possible to our customers, which means reducing time spent doing tedious things such as signing up and logging in. &nbsp;Accordingly, it occurred to us recently that we could save many of our customer a few seconds if we autocomplete their email domain while they&#8217;re typing. At the time of this writing, over 75% of our customers&#8217; email addresses are from just&nbsp;<em>five</em>&nbsp;domains (gmail.com, yahoo.com, hotmail.com, aol.com, comcast.net). so we should be able to make a pretty accurate educated guess.</p>
 <p>Autocompleting email addresses can be tricky to implement because it can easily become distracting and get in the user&#8217;s way. &nbsp;It&#8217;s something that should be completely optional and never overbearing. &nbsp;Therefore, we&#8217;ve come up with a solution that works as follows:</p>
 <ol>
 <li>Start suggesting an email domain once the user types @</li>
@@ -354,42 +252,15 @@ Example:</p>
 <p>&nbsp;</p>
 <p><img title="HTAutocompleteTextField in action" src="https://raw.github.com/hoteltonight/HTAutocompleteTextField/master/demo.gif" alt="HotelTonight" style="display: block; margin: 10px auto 30px auto;" /></p>
 <p>&nbsp;</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/174411869/index.html">Internationalization and Localization - Rails</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-21T00:00:00-08:00" pubdate data-updated="true">Jan 21<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is part two of our eight part series of posts on our first foray into internationalization and localization.<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong></p>
+  <entry>
+    <title type="html"><![CDATA[Internationalization and localization - Rails]]></title>
+    <link href="http://raylillywhite.github.com/174411869/index.html"/>
+    <updated>2013-01-21T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/174411869/174411869</id>
+    <content type="html"><![CDATA[<p>This is part two of our eight part series of posts on our first foray into internationalization and localization.<strong style="font-family: Times; font-size: medium; font-weight: normal;"><br /></strong></p>
 <ol>
 <li>Planning, tools, and process</li>
 <li>Rails</li>
@@ -490,42 +361,15 @@ Example:</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/internationalization-and-localization-plannin/index.html">Internationalization and Localization - Planning, Tools, and Process</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-12T00:00:00-08:00" pubdate data-updated="true">Dec 12<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong style="font-family: Times; font-size: medium; font-weight: normal;"><span style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;">Companywide, we are very excited to have recently released support for French, German, Italian, and Spanish in the HotelTonight apps to better serve more people in more places! When it comes to supporting multiple locales, we are really just getting started in many respects. Despite this, we thought we would share some of our experiences from the past 3 months in order to help others better understand what&rsquo;s involved once you decide that you&rsquo;re ready to bring your mobile apps to an international audience.</span><p /><span style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;">This will be a eight part series of posts that discuss:</span><br /><ol style="margin-top: 0pt; margin-bottom: 0pt;">
+  <entry>
+    <title type="html"><![CDATA[Internationalization and localization - Planning, tools, and process]]></title>
+    <link href="http://raylillywhite.github.com/internationalization-and-localization-plannin/index.html"/>
+    <updated>2012-12-12T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/internationalization-and-localization-plannin/internationalization-and-localization-plannin</id>
+    <content type="html"><![CDATA[<p><strong style="font-family: Times; font-size: medium; font-weight: normal;"><span style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;">Companywide, we are very excited to have recently released support for French, German, Italian, and Spanish in the HotelTonight apps to better serve more people in more places! When it comes to supporting multiple locales, we are really just getting started in many respects. Despite this, we thought we would share some of our experiences from the past 3 months in order to help others better understand what&rsquo;s involved once you decide that you&rsquo;re ready to bring your mobile apps to an international audience.</span><p /><span style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;">This will be a eight part series of posts that discuss:</span><br /><ol style="margin-top: 0pt; margin-bottom: 0pt;">
 <li style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;"><span style="background-color: transparent; vertical-align: baseline;">Planning, tools, and process</span></li>
 <li style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;"><span style="background-color: transparent; vertical-align: baseline;">Rails</span></li>
 <li style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;"><span style="background-color: transparent; vertical-align: baseline;">Android</span></li>
@@ -603,42 +447,15 @@ Example:</p>
 <li style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;"><span style="background-color: transparent; vertical-align: baseline;">Training translators on how to use various tools</span></li>
 </ul>
 <br /><span style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;">For us there were additional responsibilities such as soliciting feedback from multilingual team members throughout the company. This is a full-time job! If you are working with a localization service provider you will likely pay for someone to take on at least a chunk of these duties, but if you are doing things in-house be aware that this isn&rsquo;t a side job.</span><p /><span style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;">This concludes what we&rsquo;ve got for you around planning, tools, and process. If you have questions or would like more details please don&rsquo;t hesitate to get in touch with us by posting a comment. </span><p /><span style="font-size: 15px; font-family: Arial; background-color: transparent; vertical-align: baseline;">In upcoming posts in the series, we will delve into more specifics for Rails, Android, iOS, design/UX, QA, marketing, and analytics.</span></strong></p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/asynchronous-state-aware-component-rasterizat/index.html">State-aware Cached Rasterization in iOS for Epic Performance</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-07T00:00:00-08:00" pubdate data-updated="true">Dec 7<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Creating custom programmatically-drawn components in iOS is a common problem in iOS design and development. &nbsp;However, the path toward optimization for these components becomes complicated very quickly - and there is a lot of conflicting advice out there. &nbsp;For the most part, people end up applying the CALayer shouldRasterize property as a cure-all for performance issues. &nbsp;However, CA rasterization is only as clever as it can be - it flushes the raster every time an instance is redrawn. &nbsp;Often times, bundled assets are used instead. I think there is a lot of value in building dynamic components rather than filling your app binary with bundled assets, so I decided to dig deeper and develop a more efficient pattern.</p>
+  <entry>
+    <title type="html"><![CDATA[State-aware cached rasterization in iOS for epic performance]]></title>
+    <link href="http://raylillywhite.github.com/asynchronous-state-aware-component-rasterizat/index.html"/>
+    <updated>2012-12-07T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/asynchronous-state-aware-component-rasterizat/asynchronous-state-aware-component-rasterizat</id>
+    <content type="html"><![CDATA[<p>Creating custom programmatically-drawn components in iOS is a common problem in iOS design and development. &nbsp;However, the path toward optimization for these components becomes complicated very quickly - and there is a lot of conflicting advice out there. &nbsp;For the most part, people end up applying the CALayer shouldRasterize property as a cure-all for performance issues. &nbsp;However, CA rasterization is only as clever as it can be - it flushes the raster every time an instance is redrawn. &nbsp;Often times, bundled assets are used instead. I think there is a lot of value in building dynamic components rather than filling your app binary with bundled assets, so I decided to dig deeper and develop a more efficient pattern.</p>
 <p>I was inspired by two recently published works: <a href="http://robots.thoughtbot.com/post/36591648724/designing-for-ios-graphics-performance" target="_blank">Reda Lemeden&#8217;s article Designing for iOS: Graphics and Performance</a>, and <a href="https://github.com/mindsnacks/MSCachedAsyncViewDrawing">Javier Soto&#8217;s MSCachedAsyncViewDrawing library</a>.</p>
 <p>The main point of inspiration from Reda&#8217;s article was what he called a &#8216;hybrid approach&#8217; - essentially, using the iOS drawing stack to render image assets on the <em>component level</em>&nbsp;as static UIImages. &nbsp;At it&#8217;s core, this is very similar to rasterization, except that the generated image is drawn only once and stored in a shared location, instead of Core Animation storing a bitmap of <em>each rendered instance</em> of your component. &nbsp;This works great for components that are static in nature, but what about more complex components that having many properties affecting their appearance?</p>
 <p>This question drove&nbsp;the development of a class called <a href="https://github.com/hoteltonight/HTStateAwareRasterImageView">HTStateAwareRasterImageView</a>, a rasterization system that caches rendered components based on their state, rendering new assets in response to key-value observation of developer-defined key paths affecting appearance. &nbsp;A component&#8217;s unique state, based on the values of it&#8217;s properties that affect appearance, is only ever drawn once in this system. Asynchronous rendering is an added bonus, thanks to MSCachedAsyncViewDrawing. The bundled demo project compares the same component in a table using no rasterization, Core Animation rasterization, and HTStateAwareRasterImageView, demonstrating a dramatic performance enhancement, especially on older devices (I&#8217;m testing using a 4th gen iPod). The usage looks like this, from the github readme:</p>
@@ -707,200 +524,73 @@ _stateAwareRasterImageView.delegate = self;
 <p>If you decide to give <a href="https://github.com/hoteltonight/HTStateAwareRasterImageView">HTStateAwareRasterImageView</a> a try, pull requests and feedback are very welcome (submit an issue on github). Good luck!</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/handling-multiple-delegates-in-ios/index.html">Handling Multiple Delegates in iOS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-24T00:00:00-07:00" pubdate data-updated="true">Oct 24<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sometimes, the delegate pattern in iOS just doesn&#8217;t fit with a class heirarchy or design, specifically when you find yourself wanting to assign multiple delegates to a single source. For these cases, the approach usually taken is to use the notification center. This is an approach I have used in the past, but it always felt like a cop-out. Instead, I decided to build a delegate proxy using an NSProxy subclass. It takes a list of target delegates, and operates on two simple rules:</p>
+  <entry>
+    <title type="html"><![CDATA[Handling multiple delegates in iOS]]></title>
+    <link href="http://raylillywhite.github.com/handling-multiple-delegates-in-ios/index.html"/>
+    <updated>2012-10-24T00:00:00-07:00</updated>
+    <id>http://raylillywhite.github.com/handling-multiple-delegates-in-ios/handling-multiple-delegates-in-ios</id>
+    <content type="html"><![CDATA[<p>Sometimes, the delegate pattern in iOS just doesn&#8217;t fit with a class heirarchy or design, specifically when you find yourself wanting to assign multiple delegates to a single source. For these cases, the approach usually taken is to use the notification center. This is an approach I have used in the past, but it always felt like a cop-out. Instead, I decided to build a delegate proxy using an NSProxy subclass. It takes a list of target delegates, and operates on two simple rules:</p>
 <ol>
 <li>Messages with a void return type are sent to all target delegates</li>
 <li>Messages with non-void return types are send to the <em>first delegate in the list which responds to the selector.</em></li>
 </ol>
 <p>This pattern seems to be effective in identifying which messages are informative (hey, something happened) and which messages are more complex interactions (how should I do this?). It worked well for my use case (UIScrollViewDelegate), and I&#8217;m really curious to see how well it works for other applications. Comment if you find some use for it! &nbsp;Podspec included for CocoaPods users.</p>
 <p><a href="https://github.com/hoteltonight/HTDelegateProxy" title="HTDelegateProxy on GitHub" target="_blank">The class HTDelegateProxy is available here on GitHub.</a></p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/capturing-global-hotkeys-in-the-ios-simulator/index.html">Capturing Global Hotkeys in the iOS Simulator</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-08T00:00:00-07:00" pubdate data-updated="true">Oct 8<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>Why would you want to do that?</strong></p>
+  <entry>
+    <title type="html"><![CDATA[Capturing global hotkeys in the iOS Simulator]]></title>
+    <link href="http://raylillywhite.github.com/capturing-global-hotkeys-in-the-ios-simulator/index.html"/>
+    <updated>2012-10-08T00:00:00-07:00</updated>
+    <id>http://raylillywhite.github.com/capturing-global-hotkeys-in-the-ios-simulator/capturing-global-hotkeys-in-the-ios-simulator</id>
+    <content type="html"><![CDATA[<p><strong>Why would you want to do that?</strong></p>
 <p>When you&#8217;re using an iterative workflow, little shortcuts make a big difference. &nbsp;Having the ability to use custom hotkeys on the keyboard while the app runs in the simulator turns out to be very useful. &nbsp;Being able to navigate to specific screens with a hotkey can save a lot of time when you&#8217;re making small changes and restarting over and over. &nbsp;Our first application was triggering screenshot captures for a localization tool called Smartling. &nbsp;I think it will be useful in debugging edge cases where we need to trigger uncommon events in code. &nbsp;What would you use it for? &nbsp;Check out the code at:</p>
 <p><a href="https://github.com/jacobjennings/JJPrivateKeyEvents">https://github.com/jacobjennings/JJPrivateKeyEvents</a>&nbsp;</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/killing-stale-or-stuck-resque-jobs/index.html">Killing Stale or Stuck Resque Jobs</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-17T00:00:00-07:00" pubdate data-updated="true">Aug 17<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We use Resque (<a href="https://github.com/defunkt/resque)">https://github.com/defunkt/resque)</a> for processing our background jobs in Rails. We initially implemented Resque to send a few emails, but have since expanded our use greatly.</p>
+  <entry>
+    <title type="html"><![CDATA[Killing Stale or Stuck Resque Jobs]]></title>
+    <link href="http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/index.html"/>
+    <updated>2012-08-17T00:00:00-07:00</updated>
+    <id>http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/killing-stale-or-stuck-resque-jobs</id>
+    <content type="html"><![CDATA[<p>We use Resque (<a href="https://github.com/defunkt/resque)">https://github.com/defunkt/resque)</a> for processing our background jobs in Rails. We initially implemented Resque to send a few emails, but have since expanded our use greatly.</p>
 <p>As we&#8217;ve begun relying more on Resque for all aspects of our app, we will occasionally experience long running jobs that get stuck. We know the job has finished  (an email was sent or a file was generated), but the job holds on to the worker and clogs our queue. Here is our method for killing the stuck jobs and getting our queue going again.</p>
-<p></div>
+<p><!--more--></p>
+<p>Log into the machine that has the stuck worker and retrieve a list of the currently running Resque processes.</p>
+<p><script src="https://gist.github.com/5d10d4e558484d9a7be6.js?file=procs.sh"></script></p>
+<p>What we want to do is send the <strong>SIGUSR1</strong> signal to the parent process. This will tell the process to immediately kill the child process and continue working other jobs. You can get a list of which signals the processes respond to and what they do at <a href="https://github.com/defunkt/resque/#signals">https://github.com/defunkt/resque/#signals</a>.</p>
+<p>To figure out which process is the parent process look for the one that says &#8220;Forked N at T&#8221; where N is the process number of the child that is currently proccessing the stuck job.</p>
+<p>Not sure which number is <strong>SIGUSR1</strong>? Use `<strong>kill -l</strong>`.</p>
+<p><script src="https://gist.github.com/aecb898f3dac1d8f0423.js"></script></p>
+<p>So we see that <strong>30</strong> is <strong>SIGUSR1</strong>. Finally, send that to the parent process.</p>
+<p><script src="https://gist.github.com/d67829bf4e9329c5006d.js"></script></p>
+<p>This will kill the child process immediately and allow the worker to get back to work.</p>
+<p>All of this information is in the Resque README, but it still took me some time to figure it out. So I thought I would just write a quick post on how we&#8217;re handling this.</p>
+<p>If you&#8217;ve seen similar issues with stuck long running jobs and have been able to prevent them, please let us know.</p>
+]]></content>
+  </entry>
   
-  
-    <footer>
-      <a rel="full-article" href="/killing-stale-or-stuck-resque-jobs/index.html">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/writing-android-unit-tests-with-robolectric/index.html">Writing Android Unit-Tests With Robolectric</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-23T00:00:00-07:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Until recently, I&rsquo;ve been unable to configure a <a href="http://pivotal.github.com/robolectric/" title="Robolectric" target="_self">Robolectric</a> project that can easily be shared across a team and integrated with <a href="http://jenkins-ci.org/" title="Jenkins CI" target="_self">Jenkins CI</a> without the use of Maven. I mentioned this in a previous post, and have asked for assistance on Pivotal&rsquo;s <a href="http://groups.google.com/group/robolectric?pli=1" title="Robolectric Google Group" target="_self">Robolectric Google Group</a> a handful of times. There are several jar files that need to be referenced, and dependencies between the test and main Android projects and (without the use of Maven) this is difficult to configure and move around between teammates.</p>
+  <entry>
+    <title type="html"><![CDATA[Writing Android Unit-Tests With Robolectric]]></title>
+    <link href="http://raylillywhite.github.com/writing-android-unit-tests-with-robolectric/index.html"/>
+    <updated>2012-04-23T00:00:00-07:00</updated>
+    <id>http://raylillywhite.github.com/writing-android-unit-tests-with-robolectric/writing-android-unit-tests-with-robolectric</id>
+    <content type="html"><![CDATA[<p>Until recently, I&rsquo;ve been unable to configure a <a href="http://pivotal.github.com/robolectric/" title="Robolectric" target="_self">Robolectric</a> project that can easily be shared across a team and integrated with <a href="http://jenkins-ci.org/" title="Jenkins CI" target="_self">Jenkins CI</a> without the use of Maven. I mentioned this in a previous post, and have asked for assistance on Pivotal&rsquo;s <a href="http://groups.google.com/group/robolectric?pli=1" title="Robolectric Google Group" target="_self">Robolectric Google Group</a> a handful of times. There are several jar files that need to be referenced, and dependencies between the test and main Android projects and (without the use of Maven) this is difficult to configure and move around between teammates.</p>
 <p>Read on at <a href="http://publicstaticdroidmain.com/2012/03/robolectric-ant-project-eclipse/" title="Android Development Blog" target="_self">Public Static Droid Main</a>.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/working-with-credit-cards-in-hoteltonight-for/index.html">Working With Credit Cards in HotelTonight for iPad</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-03T00:00:00-07:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you haven&rsquo;t heard, we <a href="http://itunes.apple.com/us/app/hotel-tonight-last-minute/id407690035?mt=8">released an iPad app</a>. It&rsquo;s pretty good too. We were confronted with quite a few interesting and unique challenges in bringing our iPhone app to the much larger screen of the iPad. Just blowing everything up so that the existing phone app used the entirety of the iPad&rsquo;s screen wasn&rsquo;t good enough. We needed to start with a blank slate and rebuild everything from scratch to make a true iPad experience that we could be proud of.</p>
+  <entry>
+    <title type="html"><![CDATA[Working With Credit Cards In HotelTonight For iPad]]></title>
+    <link href="http://raylillywhite.github.com/working-with-credit-cards-in-hoteltonight-for/index.html"/>
+    <updated>2012-04-03T00:00:00-07:00</updated>
+    <id>http://raylillywhite.github.com/working-with-credit-cards-in-hoteltonight-for/working-with-credit-cards-in-hoteltonight-for</id>
+    <content type="html"><![CDATA[<p>If you haven&rsquo;t heard, we <a href="http://itunes.apple.com/us/app/hotel-tonight-last-minute/id407690035?mt=8">released an iPad app</a>. It&rsquo;s pretty good too. We were confronted with quite a few interesting and unique challenges in bringing our iPhone app to the much larger screen of the iPad. Just blowing everything up so that the existing phone app used the entirety of the iPad&rsquo;s screen wasn&rsquo;t good enough. We needed to start with a blank slate and rebuild everything from scratch to make a true iPad experience that we could be proud of.</p>
 
 <p>One area that received quite a bit of attention was the interface for entering and selecting a credit card to use during a booking. Since we sell a physical good (a hotel room reservation), we don&rsquo;t use the in-app purchase frameworks that Apple provides for allowing upgrades and other purchases in the other apps you love.</p>
 
@@ -973,87 +663,443 @@ _stateAwareRasterImageView.delegate = self;
 <p>As with all things software, we have a few ideas of how we want to enhance the card picker going forward. For one, users can&rsquo;t currently edit or delete cards. There are also some additional treatments and animations we&rsquo;d like to add to the card tray as you transition from the selection state into the new card input.</p>
 
 <p>You can check out the  card picker in action by downloading our new iPad app <a href="itunes">on the App Store</a>.</p>
-</div>
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[Mobile Apps Permissions - What to Do?]]></title>
+    <link href="http://raylillywhite.github.com/101696463/index.html"/>
+    <updated>2012-02-13T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/101696463/101696463</id>
+    <content type="html"><![CDATA[<p>In the wake of the Path address book debacle, Justin Williams, the newest member of our iOS team, has a <a href="http://carpeaqua.com/2012/02/11/cancel-or-allow-overload/" target="_blank">great&nbsp;</a><span style="font-family: Lucida Grande, arial, sans-serif; font-size: 12px; line-height: 20px;"><a href="http://carpeaqua.com/2012/02/11/cancel-or-allow-overload/" target="_blank">post</a> expounding on how Apple currently handles access permissions with modal dialogs,</span><span style="font-family: Lucida Grande, arial, sans-serif; font-size: 12px; line-height: 20px;">&nbsp;</span><span style="font-family: Lucida Grande, arial, sans-serif; font-size: 12px; line-height: 20px;">how that compares to other platforms and how he thinks they could solve the problem going forward. The post was <a href="http://daringfireball.net/linked/2012/02/13/cancel-or-allow" target="_blank">fireballed</a> today.</span></p>
+]]></content>
+  </entry>
   
-
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/">The Nitty Gritty of iOS Internationalization and Localization</a>
-      </li>
-    
-      <li class="post">
-        <a href="/lets-stop-making-our-users-type-gmailcom/index.html">Let&#8217;s stop making our users type @gmail.com</a>
-      </li>
-    
-      <li class="post">
-        <a href="/174411869/index.html">Internationalization and localization - Rails</a>
-      </li>
-    
-      <li class="post">
-        <a href="/internationalization-and-localization-plannin/index.html">Internationalization and localization - Planning, tools, and process</a>
-      </li>
-    
-      <li class="post">
-        <a href="/asynchronous-state-aware-component-rasterizat/index.html">State-aware cached rasterization in iOS for epic performance</a>
-      </li>
-    
-  </ul>
-</section>
-
-
-
-
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Your Name -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <entry>
+    <title type="html"><![CDATA[Checking If Rake Was Called With Verbose Or Trace]]></title>
+    <link href="http://raylillywhite.github.com/checking-if-rake-was-called-with-verbose-or-t/index.html"/>
+    <updated>2012-01-24T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/checking-if-rake-was-called-with-verbose-or-t/checking-if-rake-was-called-with-verbose-or-t</id>
+    <content type="html"><![CDATA[<p>Recently we needed to check whether a rake task was called with the &#8211;verbose or &#8211;trace flags.</p>
+<p>For verbose you can do the following inside your rake task:</p>
+<p>
+<script src="https://gist.github.com/1670723.js?file=verbose.rb"></script>
 </p>
-
-</footer>
+<p>Pretty simple, right? Be careful though, the default value for verbose is the symbol :default so using it in a predicate like `if verbose` will allow it to pass through. You will need to explicitly compare it to true.</p>
+<p>Checking if your rake task was called with &#8211;trace is a bit more, well, verbose. Here is how you would do that:</p>
+<p>
+<script src="https://gist.github.com/1670723.js?file=trace.rb"></script>
+</p>
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[Improving Accessibility Support In HotelTonight For iOS ]]></title>
+    <link href="http://raylillywhite.github.com/improving-accessibility-support-in-hoteltonig/index.html"/>
+    <updated>2012-01-12T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/improving-accessibility-support-in-hoteltonig/improving-accessibility-support-in-hoteltonig</id>
+    <content type="html"><![CDATA[<p>I recently joined the HotelTonight development team to help improve and further our existing iOS app as well as building some even cooler stuff down the road. One of the first things I wanted to tackle was ensuring that our iOS app offers proper accessibility support for users that take advantage of Apple&rsquo;s excellent <a href="http://www.apple.com/accessibility/voiceover/">VoiceOver technology</a>.</p>
+<p>VoiceOver is amazing because it enables vision-impaired users to use a device that has just a single physical button like the iPhone or iPad almost as easily as someone with full use of their sight. Tapping a button or label reads aloud just enough information for the user to perform the action intended.</p>
+<p>Beyond the noble reasons for improving the accessibility of the HotelTonight iOS app, it will also help us as we start adopting automated testing and continuous integration as part of our build workflow. We&rsquo;re still evaluating what solution we will adopt, but each one we&rsquo;ve analyzed makes extensive use of Apple&rsquo;s accessibility APIs to reference parts of your interface. Bonus!</p>
+<p>Apple gives you a lot for free if you use the standard widgets that are included with the UIKit frameworks. If you stray from the standard widgets and build your own controls, they also make it relatively simple to adopt their <code>UIAccessibility</code> informal protocol.</p>
+<h2>Accessibility Testing and the Almighty Triple-Tap Shortcut</h2>
+<p>Before you can actually begin working on improving the accessibility of your app, you need to see where it stands in its current incarnation. The easiest way to do this is by enabling VoiceOver on your own device, running through each screen and seeing what works and what needs to be fixed.</p>
+<p>If you are going to be working frequently with VoiceOver (and you will be if you plan to do this), you can quickly enable or disable it via a triple-tap of the Home button. Triple-tapping is not enabled by default, but you can turn this feature on by performing the following steps on your device:</p>
+<ol>
+<li>Launch the Settings app.</li>
+<li>Tap on General.</li>
+<li>Tap on Accessibility.</li>
+<li>Scroll down to the bottom and set &ldquo;Triple-click Home&rdquo; to &ldquo;Toggle VoiceOver&rdquo;.</li>
+</ol>
+<p>[[posterous-content:jfkabihdoyzGhwkedEJo]]</p>
+<p>The iOS simulator also has an Accessibility Inspector you can enable that will show you traits, labels and other attributes related to accessibility. I used it a few times, but generally found it easier to do all the testing on a device with VoiceOver enabled. Just make sure you&rsquo;ve got a set of headphones or your co-workers may try to smash your iPhone to silence the repeated quips of the sweet VoiceOver lady.</p>
+<h2>Table Cell Improvements</h2>
+<p>Our accessibility testing showed that the existing version of HotelTonight for iOS had a good head start thanks to how much free stuff Apple gives in terms of VoiceOver support in the frameworks. Our tab bar items each had labels that were properly read aloud. Our hotel and booking table cells each read out most of the relevant information to the user as they were browsing through the app.</p>
+<p>[[posterous-content:sHHBljfwktsbwCyufnGa]]</p>
+<p>In the case of our hotel cells, I wanted to make sure that all of the information that a non-VoiceOver user could see was accessible to anyone. In our case, that meant reading aloud which category the hotel was rather than just displaying an image. I also wanted to make sure that the accessibility label had a good delivery to it rather than being several short, robotic sounding sentences. When you tap on one our the hotel cells, it now reads something along the lines of:</p>
+<blockquote class="posterous_short_quote">
+<p>Hotel Rex, a charming hotel. $69 dollars. Regularly $109 dollars. Available for one night. 2 Rooms Left.</p>
+</blockquote>
+<p>Adding this was trivial.</p>
+<p>In our UITableViewCell subclass (<code>HTHotelCell</code>) I added two methods that are part of the <code>UIAccessibility</code> informal protocol: <code>isAccessibilityElement</code> and <code>accessibilityLabel</code>. The <code>isAccessibilityElement</code> method just returns YES to let VoiceOver know that our table cell is indeed something that should be supported. The <code>accessibilityLabel</code> is where we define what is spoken by the lovely VoiceOver lady. We adjust that output based on room availability, how many nights are available to book and whether the hotel has sold out for the evening.</p>
+<h2>Detail Tab Improvements</h2>
+<p>When a user taps on a specific hotel to check out the details of it, we have a segmented control along the top with separate segments for &ldquo;Book&rdquo;, &ldquo;Info&rdquo; and &ldquo;Map&rdquo;. We use the open source <code>SSSegmentedControl</code> to build our stylized view and what I discovered was that it was completely inaccessible to anyone using VoiceOver.</p>
+<p>[[posterous-content:HrnFzuJxmBiDBrqoIjEk]]</p>
+<p>With a standard segmented control such as the one in the YouTube app&rsquo;s &ldquo;Most Viewed&rdquo; tab, each segment is individually tappable and will have its label read aloud. Unfortunately for us, our custom control didn&rsquo;t allow any sort selection under VoiceOver. This meant our VoiceOver users could only work within the &ldquo;Book&rdquo; tab and would never be able to see our additional information about the hotel or view it on a map from within the app.</p>
+<p>Apple has a second informal protocol called <code>UIAccessibilityContainer</code> to handle situations like this. <code>UIAccessibilityContainer</code> allows developers to group separate <code>UIAccessibilityElements</code> that are part of a single visual control, but have different selectable parts. The <code>UIAccessibilityContainer</code> protocol has three required methods to implement:</p>
+<ol>
+<li><code>accessibilityElementCount</code> returns the number of <code>UIAccessibilityElements</code>.</li>
+<li><code>accessibilityElementAtIndex:</code> returns a specific instance of  <code>UIAccessibilityElement</code>.</li>
+<li><code>indexOfAccessibilityElement:</code> returns an NSInteger related to a specific <code>UIAccessibilityElement</code>.</li>
+</ol>
+<p>As part of <code>UIAccessibilityContainer</code> you are also required to set the <code>isAccessibilityElement</code> method we discussed earlier to NO. Since each individual element will be selectable, the parent control shouldn&rsquo;t be otherwise the others wouldn&rsquo;t be tappable.</p>
+<p>To get the tabs selectable in VoiceOver, we sprinkled a few extra lines of code into the <code>drawRect:</code> method of <code>SSSegmentedControl</code>. This snippet creates the <code>UIAccessibilityElement</code> for each tab and adds it to a separate <code>accessibleElements</code> array that we then work with in the protocol methods from above.</p>
+<p><script src="https://gist.github.com/1586076.js"></script></p>
+<p>You can see our fork of SSToolkit with the accessibility improvements on our <a href="https://github.com/hoteltonight/sstoolkit">Github profile</a>.</p>
+<h2>Night Selector Improvements</h2>
+<p>Another piece of our hotel detail view controller needed a bit of improvement in VoiceOver: our <code>HTNightSelectorView</code> control. When deciding to book a specific hotel, we have a custom control that will slide up with the number of nights you are able to book (usually between 1 and 5 nights). Each of those options are rendered as a separate instance of a <code>UIView</code> subclass called <code>HTNightsRow</code>.</p>
+<p>[[posterous-content:GaukloerjAthfoximusm]]</p>
+<p>The previous version of the HotelTonight app would allow a VoiceOver user expose the custom night selection UI, but they couldn&rsquo;t actually change the number during the booking experience. Instead the number of nights and the price were shown as separate labels that were read aloud.</p>
+<p>To workaround this we set each instance of <code>HTNightsRow</code> to be an accessible element by setting  <code>isAccessibilityElement</code> to YES and adjusting the <code>accessibilityLabel</code> to output the number of nights and the price as a single string. In situtations where a specific number of nights were unavailable, non-VoiceOver users are shown &ldquo;N/A&rdquo; rather than a price. VoiceOver reads that as &ldquo;N Slash A&rdquo;  <code>accessibilityLabel</code> will instead read that out as &ldquo;not available&rdquo;.</p>
+<p>We also adjusted each <code>HTNightsRow</code> instance to have a custom set of <code>UIAccessibilityTraits</code>. Traits are what help VoiceOver understand what each specific view or control is capable of doing. Apple offers a variety of different traits you can apply to your controls. By default we wanted to treat each <code>HTNightsRow</code> row as a tappable button that contains static text and allows manipulation by the user.</p>
+<p>If the night option is unavailable, we also set the <code>UIAccessibilityTraitNotEnabled</code> trait. Here&rsquo;s the snippet that does that.</p>
+<p><script src="https://gist.github.com/1586083.js"></script></p>
+<h2>Useful Links</h2>
+<p>These were the links I frequently referenced working on this project.</p>
+<ul>
+<li><a href="http://developer.apple.com/library/ios/#documentation/UserExperience/Conceptual/iPhoneAccessibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008785-CH1-SW1">Apple&rsquo;s Accessibility Programming Guide for iOS</a></li>
+<li><a href="http://mattgemmell.com/2010/12/19/accessibility-for-iphone-and-ipad-apps/">Matt &lsquo;Legend&rsquo; Gemmell&rsquo;s Accessibility Guide</a></li>
+<li><a href="http://developer.apple.com/library/ios/documentation/uikit/reference/UIAccessibility_Protocol/">UIAccessibility Protocol Reference</a></li>
+<li><a href="http://developer.apple.com/library/ios/#documentation/uikit/reference/UIAccessibilityContainer_Protocol/Introduction/Introduction.html">UIAccessibilityContainer Protocol Reference</a></li>
+<li><a href="http://developer.apple.com/library/ios/documentation/uikit/reference/UIAccessibilityElement_Class/Reference/Reference.html">UIAccessibilityElement Protocol Reference</a></li>
+</ul>
+<p>In all, getting the HotelTonight iOS app up and properly running with VoiceOver enabled was a two-day project. It wasn&rsquo;t the most difficult problem we have ever tackled, but it could be one of the most rewarding. We want HotelTonight to be usable by anyone with an iPhone and we can happily say that our newest version is.</p>
+<p>You can check out our improved VoiceOver support in the upcoming 2.2 release of&nbsp;<a href="http://itunes.apple.com/us/app/hotel-tonight-last-minute/id407690035?mt=8">HotelTonight for iOS</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pure CSS3 Buttons in Mobile WebKit]]></title>
+    <link href="http://raylillywhite.github.com/pure-css3-buttons-in-mobile-webkit/index.html"/>
+    <updated>2011-12-12T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/pure-css3-buttons-in-mobile-webkit/pure-css3-buttons-in-mobile-webkit</id>
+    <content type="html"><![CDATA[<p>[[posterous-content:DbjseIpecepIErpBBjCh]]<p /></p>
+<p><span style="font-size: medium;"><strong>Pure CSS3 buttons in Mobile WebKit</strong></span></p>
+<p>Recently, we introduced a lower friction pathway from the wilds of the world wide web into our app, HotelTonight. &nbsp;We see a lot of traffic coming on mobile devices and decided to try to put as much of the HotelTonight experience in front of visitors as possible.</p>
+<p>In addition to implementing a deal sample screen, which you can see by visiting our <a href="http://hoteltonight.com/" title="Hotel Tonight" target="_blank">homepage</a> with an iPhone, Android or Blackberry device, we have a signup page which allows users to quickly create an account from scratch or by linking up with their facebook profile.</p>
+<p>It was important for us to create a seemless transition between the web-based signup and the app. &nbsp;We&#8217;re obscenely proud of our apps, and the faster we can show you why the happier we are. &nbsp;We approached the signup screen as a trailer for the native apps, and to accomplish that we needed to nail the native-looking elements.</p>
+<p>&nbsp;</p>
+<p><strong>Why pure CSS3?</strong></p>
+<p>There are quite a few techniques for emulating native iphone app controls, some incredibly creative, using images in different ways. &nbsp;This approach has a lot of advantages, primary among them being that you can capture all the subtlety employed in the native elements using tools well suited to the task (Photoshop, Fireworks, maybe Pixelmator).</p>
+<p>But there are drawbacks as well. &nbsp;Using images in almost any capacity can severely limit your design. &nbsp;Characteristics like color, opacity and dimension can be pegged down when using images.</p>
+<p>An image also increases the load time of your page, which is a first-order offense in mobile web development. &nbsp;Yes, it doesn&#8217;t have to increase it by much, but we approached adding a resource to load as a last-resort. &nbsp;The signup page needed to be as fast to load as we could push it, and push it we did.</p>
+<p>&nbsp;</p>
+<p><strong>Implementation</strong></p>
+<p>One key aspect for our implementation of these iphone-style buttons was the semantic structure of our forms. &nbsp;We&#8217;re pretty big into semantic markup, and as it happened that worked out very much in our favor. &nbsp;The following is a snippet that shows how the button is rendered into our form:</p>
+<p><script src="https://gist.github.com/1425583.js"></script></p>
+<p>&nbsp;</p>
+<p>You can see that the list item tag is classed as a &#8220;button&#8221;, which we use to achieve the outset border look of the native button by styling the list item tag *as* the outset border. &nbsp;We probably would have needed an extra[neous] div tag around the button without this.</p>
+<p>You can see the effect below, first in the native implementation and then in our HTML5 implementation:</p>
+<p>[[posterous-content:GaIvCnIxyrdqFrGErchb]][[posterous-content:ooozrgaFHqrawrlblBvq]]</p>
+<p>&nbsp;</p>
+<p><strong>CSS</strong></p>
+<p>The styling leverages some key features of the CSS3 spec that are generally well supported across WebKit browsers including box shadows (and inset box shadows), linear gradients and text shadows.</p>
+<p><script src="https://gist.github.com/1431661.js"></script></p>
+<p>&nbsp;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Quick iOS App for Comparing All Fonts]]></title>
+    <link href="http://raylillywhite.github.com/quick-ios-app-for-checking-out-fonts/index.html"/>
+    <updated>2011-12-06T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/quick-ios-app-for-checking-out-fonts/quick-ios-app-for-checking-out-fonts</id>
+    <content type="html"><![CDATA[<p>I threw together a quick iOS app for viewing all of the fonts on the device. There are some more featureful apps for looking at each of the device&#8217;s fonts, such as <a href="http://itunes.apple.com/us/app/fonts/id285217489?mt=8" title="Fonts">Fonts</a>, but we didn&#8217;t see any that let us view a custom string in every font, all in one table. But it only took 20 minutes or so to create exactly what we needed. I&#8217;ve shared the source on GitHub at&nbsp;<a href="https://github.com/raylillywhite/FontTest">https://github.com/raylillywhite/FontTest</a>, in case it sounds useful to anyone. As you can see below, it was quick and dirty ;)[[posterous-content:pgJnidDynwqklGcJvdoH]]</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A hack/ship git workflow with shared remote branches]]></title>
+    <link href="http://raylillywhite.github.com/79320846/index.html"/>
+    <updated>2011-11-18T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/79320846/79320846</id>
+    <content type="html"><![CDATA[<p>This post describes how we&#8217;ve come to develop some <a href="http://github.com/hoteltonight/git-scripts">git scripts and shortcuts</a> to help manage our development process at Hotel Tonight. All the aliases/functions I use in the examples below are documented there.</p>
+<h2>Some History</h2>
+<p>When we first started working on Hotel Tonight, we adopted the <a href="http://reinh.com/blog/2008/08/27/hack-and-and-ship.html">hack &amp;&amp; ship</a> workflow to facilitate performing all work on feature-specific branches. As long as we had fewer developers than software projects, that worked great, because it was very unusual for more than one person to work on a feature before it was ready to ship to master.</p>
+<p>Somewhat similar to <a href="http://scottchacon.com/2011/08/31/github-flow.html">GitHub&#8217;s workflow</a>, we don&#8217;t have formal releases, and like to keep master always in a deployable state. So that means that when we want to collaborate on a new feature, we do it in a remote branch. And that&#8217;s where things become tricky.</p>
+<h2>The dark side of rebasing</h2>
+<p>The original hack script pulls in other people&#8217;s changes <em>from master</em>, by rebasing your branch onto master each time. This presents two problems if you&#8217;re working on a shared remote branch with others &#8211; first, it&#8217;s not what you&#8217;re most interested in. That is, while you&#8217;d like to keep up with changes on master, what you <em>really</em> want is to keep up with other people&#8217;s changes on your branch.</p>
+<p>Second, and this is what really bit us, if you rebase commits you&#8217;ve already shared with others onto master, you&#8217;re in effect rewriting history, and chaos ensues. Witness:</p>
+<p>I create a new branch and start working on some feature&#8211;</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (master)]$ gcb disco_ball
+ Switched to a new branch 'disco_ball'
 
+[chris example (disco_ball)]$ vi ball.rb
 
+[chris example (disco_ball %)]$ gac
+[disco_ball 73c2c53] Some initial thoughts on implementing the ball
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 ball.rb
 
+[chris example (disco_ball)]$ git push origin disco_ball
+ To /home/chris/example      * [new branch]      disco_ball -&gt; disco_ball</pre></div>
+</div>
 
+</blockquote>
+<p>Now my coworker checks it out, enters some of his ideas&#8211;</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (master)]$ git checkout -t origin/disco_ball
+ Branch disco_ball set up to track remote branch disco_ball from origin.
+ Switched to a new branch 'disco_ball'
 
+[patrick example (disco_ball)]$ vi ball.rb
 
+[patrick example (disco_ball *)]$ gac
+ [disco_ball 819d41c] Some alternate disco-ball strategies
+ 1 files changed, 1 insertions(+), 1 deletions(-)</pre></div>
+</div>
 
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
+</blockquote>
+<p>Meanwhile, say there have been some changes on master, and I want to pull those in, and then do some more work on the ball, then share that. Our old hack would do a rebase onto master..</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ git rebase master
+ First, rewinding head to replay your work on top of it...
+ Applying: Some initial thoughts on implementing the ball
 
+[chris example (disco_ball)]$ vi ball.rb
 
+[chris example (disco_ball *)]$ gac
+ [disco_ball a76373e] Lighting-related work
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
+[chris example (disco_ball)]$ git push
+ To /home/chris/example
+   0ae267e..3fc53df  master -&gt; master
+ ! [rejected]        disco_ball -&gt; disco_ball (non-fast-forward)
+ error: failed to push some refs to '/home/chris/example'
+ To prevent you from losing history, non-fast-forward updates were rejected
+ Merge the remote changes before pushing again.  See the 'Note about
+ fast-forwards' section of 'git push --help' for details.</pre></div>
+</div>
 
+</blockquote>
+<p>And here&#8217;s where things break down. My history doesn&#8217;t match up with the remote history anymore (3fc53df is from master):</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ gl
+ a76373e Lighting-related work
+ 06bd2d1 Some initial thoughts on implementing the ball
+ 3fc53df An important component to keep the people upstairs away from us
+ 0ae267e Create example repo
 
-</body>
-</html>
+[chris example (disco_ball)]$ gl origin/disco_ball
+ 73c2c53 Some initial thoughts on implementing the ball
+ 0ae267e Create example repo</pre></div>
+</div>
+
+</blockquote>
+<p>Git suggests merging the remote changes, but that isn&#8217;t pretty&#8211;</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ git pull origin disco_ball
+ From /home/chris/example
+  * branch            disco_ball -&gt; FETCH_HEAD
+ Auto-merging ball.rb
+ CONFLICT (add/add): Merge conflict in ball.rb
+ Automatic merge failed; fix conflicts and then commit the result.
+
+[chris example (disco_ball *+|MERGING)]$ cat ball.rb
+# There should be a whole ton of little mirrors on it!
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+# Also, important that we shine light at it.
+=======
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 73c2c5395095d5f0502db8d397d80f3aa029f1ec</pre></div>
+</div>
+
+</blockquote>
+<p>Alternately, we could force push, but then look what happens when Patrick tries to update:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (disco_ball)]$ git pull
+ From /home/chris/example
+  + 73c2c53...a76373e disco_ball -&gt; origin/disco_ball  (forced update)
+ Auto-merging ball.rb
+ CONFLICT (add/add): Merge conflict in ball.rb
+ Automatic merge failed; fix conflicts and then commit the result.
+
+[patrick example (disco_ball *+|MERGING)]$ cat ball.rb
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+# What if it's just one big shiny sphere?
+=======
+# There should be a whole ton of little mirrors on it!
+# Also, important that we shine light at it.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; a76373ed377efdc65849e887e8694eeca0e23730</pre></div>
+</div>
+
+</blockquote>
+<p>What a mess! So, clearly, this doesn&#8217;t work. And, if you start squashing stuff, which we like to do sometimes, so that we don&#8217;t have to spam github with all our intermediate work, the history-rewriting merge-conflict-creating situation becomes even uglier.</p>
+<h2>A kinder, gentler way to share</h2>
+<p>In order to control this potential for chaos, we needed a better strategy for how branches are shared. This is the procedure I came up with:</p>
+<ol>
+<li>When you &#8216;hack&#8217; on a shared branch, you rebase your local changes <em>onto the remote branch</em>, not onto master. New commits from master are <em>not</em> pulled in during hack.</li>
+<li>When you &#8216;share&#8217; your changes to an existing shared branch, first do an interactive rebase onto the remote, so you can squash, then <em>merge</em> in anything new from master, right before pushing. This is the only safe time to merge in from master, because you don&#8217;t want to squash changes from master in amongst your local changes.</li>
+<li>When you &#8216;ship&#8217; to master, do an interactive rebase onto master, to do a big squash of all the branch work &#8211; and at that point, the remote branch is considered deprecated and should be removed, since its history no longer matches.</li>
+</ol>
+<p>Here&#8217;s what that process looks like, starting over with a new disco ball branch:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (master)]$ gcb disco_ball
+ Switched to a new branch 'disco_ball'
+
+[chris example (disco_ball)]$ vi ball.rb
+
+[chris example (disco_ball %)]$ gac
+ [disco_ball 77f1fa3] Some initial thoughts on implementing the ball
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 ball.rb
+
+[chris example (disco_ball)]$ share
+ Successfully rebased and updated refs/heads/disco_ball.
+ To /home/chris/example
+  * [new branch]      disco_ball -&gt; disco_ball</pre></div>
+</div>
+
+</blockquote>
+<p>OK, so &#8216;share&#8217; at this stage basically just created a new remote branch for us. Now Patrick wants to check that out; we&#8217;ll give him a shortcut to see what&#8217;s available and &#8216;borrow&#8217; it:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (master)]$ borrow
+ Already on 'master'
+ Already up-to-date.
+   disco_ball
+   master
+
+[patrick example (master)]$ borrow disco_ball
+ Branch disco_ball set up to track remote branch disco_ball from origin.
+ Switched to a new branch 'disco_ball'</pre></div>
+</div>
+
+</blockquote>
+<p>Now let&#8217;s say Patrick makes a few changes, and wants to share them with me.</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (disco_ball)]$ vi ball.rb
+
+[patrick example (disco_ball *)]$ gac
+ [disco_ball 840074c] Another thought on the disco ball
+  1 files changed, 1 insertions(+), 0 deletions(-)
+
+[patrick example (disco_ball)]$ vi ball.rb
+
+[patrick example (disco_ball *)]$ gac
+ [disco_ball bb06e68] No, wait, that was stupid, this instead.
+  1 files changed, 1 insertions(+), 1 deletions(-)
+
+[patrick example (disco_ball)]$ share -notest</pre></div>
+</div>
+
+</blockquote>
+<p>At that point he&#8217;ll have a chance to squash:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>pick 021e621 Another thought on the disco ball
+pick f3b8218 No, wait, that was stupid, this instead.
+
+# Rebase 77f1fa3..f3b8218 onto 77f1fa3
+...</pre></div>
+</div>
+
+</blockquote>
+<p>The initial commit on the branch, which already exists in the remote, isn&#8217;t listed here; that wouldn&#8217;t be safe to squash.</p>
+<p>When the rebase is done the share will merge in the latest from master, and push to the remote. Note the &#8216;-notest&#8217; parameter; normally &#8216;share&#8217; would notice that there was new stuff from master merged in, and run tests before pushing to make sure they hadn&#8217;t broken anything &#8211; since there aren&#8217;t any tests set up for this example repo, we&#8217;ll just skip that. In practice, you&#8217;ll likely need to modify the &#8216;runtests&#8217; script to actually run your project&#8217;s tests correctly.</p>
+<p>When I next &#8216;hack&#8217;, I&#8217;ll get both Patrick&#8217;s changes, and the latest from master that was merged in when he shared:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ hack
+ From /home/chris/example
+  * branch            disco_ball -&gt; FETCH_HEAD
+ Updating 77f1fa3..0bf7d4c     Fast-forward
+  ball.rb    |    1 +
+  ceiling.rb |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ceiling.rb
+ Current branch disco_ball is up to date.</pre></div>
+</div>
+
+</blockquote>
+<h2>Ship It</h2>
+<p>So now if I&#8217;m ready to release the feature to master, I can just &#8216;ship&#8217; normally. I&#8217;ll get a chance to squash everything on the branch:</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>pick 77f1fa3 Some initial thoughts on implementing the ball
+pick dd47d48 Another thought on the disco ball
+
+# Rebase a6ed99a..0bf7d4c onto a6ed99a
+...</pre></div>
+</div>
+
+</blockquote>
+<p>And then it&#8217;s merged into master, and I&#8217;m warned to get rid of the remote. The &#8216;gbdone&#8217; script will remove the shipped local and remote branches.</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[chris example (disco_ball)]$ ship
+ From /home/chris/example
+  * branch            disco_ball -&gt; FETCH_HEAD
+ Already up-to-date.
+ Current branch disco_ball is up to date.
+ [detached HEAD 00db9d0] A basic disco ball
+  1 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ball.rb
+ Successfully rebased and updated refs/heads/disco_ball.
+ Switched to branch 'master'
+ Updating a6ed99a..00db9d0     Fast-forward
+  ball.rb |    2 ++
+  1 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ball.rb
+ To /home/chris/example
+    a6ed99a..00db9d0  master -&gt; master
+ Switched to branch 'disco_ball'
+ IMPORTANT: Please remember that your local branch has a conflicting
+ history with its remote now, due to rebase onto master. Don't let anyone
+ keep working on the remote; it needs to be blown away via either outright
+ removal or forced push.
+
+[chris example (disco_ball)]$ gbdone
+ Switched to branch 'master'
+ Deleted branch disco_ball (was 00db9d0).
+ To /home/chris/example
+  - [deleted]         disco_ball</pre></div>
+</div>
+
+</blockquote>
+<h2>A slightly more cautious way to ship</h2>
+<p>Alternately, you may want to do a code review and/or some extra testing, after rebasing onto master and squashing your changes, but before shipping. So we added a convenience method to &#8216;pack&#8217; your code into another branch before release. Then you can &#8216;share&#8217; that for code review, or just play with it locally, and ship it normally when you&#8217;re done.</p>
+<blockquote>
+<div class="CodeRay">
+  <div class="code"><pre>[patrick example (disco_ball)]$ pack
+ Switched to a new branch 'disco_ball_release'
+ [detached HEAD f77edf3] A basic disco ball
+  1 files changed, 2 insertions(+), 0 deletions(-)
+  create mode 100644 ball.rb
+ Successfully rebased and updated refs/heads/disco_ball_release.
+
+[patrick example (disco_ball_release)]$ gl
+ f77edf3 A basic disco ball
+ a6ed99a An important component to keep the people upstairs away from us
+ 0ae267e Create example repo</pre></div>
+</div>
+
+</blockquote>
+<h2>In summary</h2>
+<p>I guess that all sounds a bit complicated. But once you get into the routine, it&#8217;s pretty frictionless. When you&#8217;re not sharing a branch, hack and ship still work the same as before. When you are, all you need to do most of the time is &#8216;share&#8217; periodically to keep everybody in sync, or &#8216;hack&#8217; occasionally if you want to pull in a coworker&#8217;s changes before yours are ready to share.</p>
+<p>There are still a few edge cases, mostly around what happens when there are legit conflicts &#8211; some of those the scripts will detect and help you out with, others we might still need to work on. Again, all of it&#8217;s available here:</p>
+<p><a href="http://github.com/hoteltonight/git-scripts">http://github.com/hoteltonight/git-scripts</a></p>
+<p>Let us know what you think!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails and Mobile and Hotels Oh My!]]></title>
+    <link href="http://raylillywhite.github.com/rails-and-mobile-and-bookings-oh-my/index.html"/>
+    <updated>2011-11-17T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/rails-and-mobile-and-bookings-oh-my/rails-and-mobile-and-bookings-oh-my</id>
+    <content type="html"><![CDATA[<p class="p1">Welcome to the HotelTonight engineering blog. We&#8217;ve spent the last year creating an <a href="http://itunes.apple.com/us/app/hotel-tonight-last-minute/id407690035?mt=8" title="HotelTonight iPhone app" target="_blank">awesome mobile app</a> and an extensive back end to power our apps and support our hotel partners. Along the way we&#8217;ve employed and built some very interesting technology. The first version of the iPhone app, and corresponding server side components, were developed in about 2.5 months by two developers, with help from a designer, and business folks. During this time we built the first mobile-only online travel agency, and believe the most major innovation in travel since opaque deals. &nbsp;This has&nbsp;<a href="http://www.hoteltonight.com/press" title="HotelTonight's great press" target="_blank">delighted</a> both end users and hotels. We didn&#8217;t stop there.</p>
+<p class="p2">HotelTonight has continued to innovate. We just released the <a href="http://www.tnooz.com/2011/11/15/mobile/revenue-managers-go-mobile-with-hoteltonight-extranet" target="_blank">world&#8217;s first mobile extranet for hotels</a>. In addition, we recently rewrote our entire iPhone app to get from 4.5 to 5 stars (watch for a future blog entry). We could be biased, but we believe it is the best travel app in the App Store. We have several cool projects in the works right now that we&#8217;ll share here as they get released. We use a lot of open source, are working on releasing some of our own, and contributing back changes (some of which are available now in <a href="https://github.com/hoteltonight" title="HotelTonight on GitHub" target="_blank">our GitHub</a> forks). &nbsp;</p>
+<p class="p2">In the near future on this blog, some of the topics we&#8217;re planning to cover include:</p>
+<ul>
+<li>Our Git workflow and scripts</li>
+<li>How we leverage &#8220;virtual credit cards&#8221;</li>
+<li>Cool code and techniques used in our iOS app</li>
+<li>Some fun CSS tricks</li>
+<li>CoffeeScript, Haml, and templating</li>
+<li>Interesting details on the code that actually books a room</li>
+</ul>
+<p class="p2">Stay tuned for our first real blog entry. And, please tell us what you&#8217;d like to know about HotelTonight engineering and technology.</p>
+]]></content>
+  </entry>
+  
+</feed>

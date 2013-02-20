@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: core animation | My Octopress Blog]]></title>
+  <link href="http://raylillywhite.github.com/blog/categories/core-animation/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/"/>
+  <updated>2013-02-19T16:28:46-08:00</updated>
+  <id>http://raylillywhite.github.com/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[State-aware cached rasterization in iOS for epic performance]]></title>
+    <link href="http://raylillywhite.github.com/asynchronous-state-aware-component-rasterizat/index.html"/>
+    <updated>2012-12-07T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/asynchronous-state-aware-component-rasterizat/asynchronous-state-aware-component-rasterizat</id>
+    <content type="html"><![CDATA[<p>Creating custom programmatically-drawn components in iOS is a common problem in iOS design and development. &nbsp;However, the path toward optimization for these components becomes complicated very quickly - and there is a lot of conflicting advice out there. &nbsp;For the most part, people end up applying the CALayer shouldRasterize property as a cure-all for performance issues. &nbsp;However, CA rasterization is only as clever as it can be - it flushes the raster every time an instance is redrawn. &nbsp;Often times, bundled assets are used instead. I think there is a lot of value in building dynamic components rather than filling your app binary with bundled assets, so I decided to dig deeper and develop a more efficient pattern.</p>
+
+
+<p>I was inspired by two recently published works: <a href="http://robots.thoughtbot.com/post/36591648724/designing-for-ios-graphics-performance" target="_blank">Reda Lemeden's article Designing for iOS: Graphics and Performance</a>, and <a href="https://github.com/mindsnacks/MSCachedAsyncViewDrawing">Javier Soto's MSCachedAsyncViewDrawing library</a>.</p>
+
+
+<p>The main point of inspiration from Reda's article was what he called a 'hybrid approach' - essentially, using the iOS drawing stack to render image assets on the <em>component level</em>&nbsp;as static UIImages. &nbsp;At it's core, this is very similar to rasterization, except that the generated image is drawn only once and stored in a shared location, instead of Core Animation storing a bitmap of <em>each rendered instance</em> of your component. &nbsp;This works great for components that are static in nature, but what about more complex components that having many properties affecting their appearance?</p>
+
+
+<p>This question drove&nbsp;the development of a class called <a href="https://github.com/hoteltonight/HTStateAwareRasterImageView">HTStateAwareRasterImageView</a>, a rasterization system that caches rendered components based on their state, rendering new assets in response to key-value observation of developer-defined key paths affecting appearance. &nbsp;A component's unique state, based on the values of it's properties that affect appearance, is only ever drawn once in this system. Asynchronous rendering is an added bonus, thanks to MSCachedAsyncViewDrawing. The bundled demo project compares the same component in a table using no rasterization, Core Animation rasterization, and HTStateAwareRasterImageView, demonstrating a dramatic performance enhancement, especially on older devices (I'm testing using a 4th gen iPod). The usage looks like this, from the github readme:</p>
+
+
+<p>Start by conforming to the HTRasterizableView protocol. A simple example is provided in the demo project (HTExampleRasterizableComponent). The single required method is:</p>
+
+
+<div class="CodeRay">
+  <div class="code"><pre>- (NSArray *)keyPathsThatAffectState;</pre></div>
+</div>
+
+
+
+
+<p>This is used for two purposes:&nbsp;</p>
+
+
+<ul>
+<li>To key-value observe the specified key paths to trigger image regeneration&nbsp;</li>
+<li>To generate a hash of the component's state</li>
+</ul>
+
+
+<p>Initialize a HTStateAwareRasterImageView and set the rasterizableView property to your HTRasterizableView, like this snippet from the demo project:</p>
+
+
+<div class="CodeRay">
+  <div class="code"><pre>_rasterizableComponent = [[HTExampleRasterizableComponent alloc] init];
+_stateAwareRasterImageView = [[HTStateAwareRasterImageView alloc] init];
+_stateAwareRasterImageView.rasterizableView = _rasterizableComponent;
+_stateAwareRasterImageView.delegate = self;
+[self addSubview:_stateAwareRasterImageView];</pre></div>
+</div>
+
+
+
+
+<p>If your component can take advantage of UIImage caps (fixed-size corners and stretchable center), these two methods are optional on the HTRasterizableView protocol:&nbsp;</p>
+
+
+<div class="CodeRay">
+  <div class="code"><pre>- (UIEdgeInsets)capEdgeInsets;
+- (BOOL)useMinimumFrameForCaps;</pre></div>
+</div>
+
+
+
+
+<p>If you respond YES to userMinimumFrameForCaps, the component is rendered at it's cumulative cap sizes plus 1pt horizontally and vertically, drastically reducing render time in many applications.</p>
+
+
+<p>You can specify if you want drawing to occur synchronously on the main thread:</p>
+
+
+<div class="CodeRay">
+  <div class="code"><pre>@property (nonatomic, assign) BOOL drawsOnMainThread;</pre></div>
+</div>
+
+
+
+
+<p>You can also turn off keypath observing if you want to manually regenerate images (use this for pre-rendering assets):</p>
+
+
+<div class="CodeRay">
+  <div class="code"><pre>@property (nonatomic, assign) BOOL kvoEnabled; 
+// For prerendering only
+- (void)regenerateImage:(HTSARIVVoidBlock)complete;</pre></div>
+</div>
+
+
+
+
+<p>A delegate property is also available to let you know when it's regenerating an image, and when it gets a new image back:</p>
+
+
+<div class="CodeRay">
+  <div class="code"><pre>@property (atomic, assign) id&lt;HTStateAwareRasterImageViewDelegate&gt; delegate;</pre></div>
+</div>
+
+
+
+
+<p>For debugging purposes, the cache&nbsp;key is available through this method.</p>
+
+
+<div class="CodeRay">
+  <div class="code"><pre>- (NSString *)cacheKey;</pre></div>
+</div>
+
+
+
+
+<p>The demo project has four tabs:</p>
+
+
+<ul>
+<li>A tableview taking advantage of HTStateAwareRasterImageView</li>
+<li>A tableview that displays cache key, actual size and cell-height sized cached images</li>
+<li>A tableview that uses the same component without rasterization</li>
+<li>A tableview that uses the same component with Core Animation rasterization enabled</li>
+</ul>
+
+
+<p>[[posterous-content:kalFFJyEvoqgGhuifDna]][[posterous-content:rbkatumnjpxwdsCvplev]]</p>
+
+
+<ul>
+</ul>
+
+
+<p>&nbsp;</p>
+
+
+<p>The cache key used to define the state of your component is generated by the NSObject+HTPropertyHash category. It is important that the hash method produces a string that is unique to the state of your properties, but not TOO unique by including things like pointer values. The exception for CGColorRef in that category is made because we only want the RGBA values described, not the pointer value&nbsp;plus the RGBA values. &nbsp;Other exceptions may be required, depending on the application.</p>
+
+
+<p>A limitation of this approach (and all approaches that render CALayers to image contexts) is that CALayer renderInContext, used for drawing the layer to a graphics context, does not support the CALayer mask property, as well as some other exceptions. &nbsp;The category included in the project, UIView+HTDrawInContext, provides a workaround for CALayer masks, but <em>only for the root layer of the rasterized component.</em>&nbsp;From the CALayer doc,</p>
+
+
+<p>"...&nbsp;this method does not support the entire Core Animation composition model.&nbsp;<code>QCCompositionLayer</code>,&nbsp;<code>CAOpenGLLayer</code>, and&nbsp;<code>QTMovieLayer</code>&nbsp;layers are not rendered. Additionally, layers that use 3D transforms are not rendered, nor are layers that specify&nbsp;<code><a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CALayer_class/Introduction/Introduction.html#//apple_ref/occ/instp/CALayer/backgroundFilters">backgroundFilters</a></code>,&nbsp;<code><a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CALayer_class/Introduction/Introduction.html#//apple_ref/occ/instp/CALayer/filters">filters</a></code>,<code><a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CALayer_class/Introduction/Introduction.html#//apple_ref/occ/instp/CALayer/compositingFilter">compositingFilter</a></code>, or a&nbsp;<code><a href="https://developer.apple.com/library/mac/documentation/graphicsimaging/reference/CALayer_class/Introduction/Introduction.html#//apple_ref/occ/instp/CALayer/mask">mask</a></code>&nbsp;values. Future versions of OS X may add support for rendering these layers and properties."</p>
+
+
+<p>If you decide to give <a href="https://github.com/hoteltonight/HTStateAwareRasterImageView">HTStateAwareRasterImageView</a> a try, pull requests and feedback are very welcome (submit an issue on github). Good luck!</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>&nbsp;</p>
+
+]]></content>
+  </entry>
+  
+</feed>

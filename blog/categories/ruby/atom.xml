@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | My Octopress Blog]]></title>
+  <link href="http://raylillywhite.github.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/"/>
+  <updated>2013-02-19T16:28:46-08:00</updated>
+  <id>http://raylillywhite.github.com/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Killing Stale or Stuck Resque Jobs]]></title>
+    <link href="http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/index.html"/>
+    <updated>2012-08-17T00:00:00-07:00</updated>
+    <id>http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/killing-stale-or-stuck-resque-jobs</id>
+    <content type="html"><![CDATA[<p>We use Resque (<a href="https://github.com/defunkt/resque)">https://github.com/defunkt/resque)</a> for processing our background jobs in Rails. We initially implemented Resque to send a few emails, but have since expanded our use greatly.</p>
+
+
+<p>As we've begun relying more on Resque for all aspects of our app, we will occasionally experience long running jobs that get stuck. We know the job has finished  (an email was sent or a file was generated), but the job holds on to the worker and clogs our queue. Here is our method for killing the stuck jobs and getting our queue going again.</p>
+
+
+<p><!--more--></p>
+
+
+<p>Log into the machine that has the stuck worker and retrieve a list of the currently running Resque processes.</p>
+
+
+<p><script src="https://gist.github.com/5d10d4e558484d9a7be6.js?file=procs.sh"></script></p>
+
+
+<p>What we want to do is send the <strong>SIGUSR1</strong> signal to the parent process. This will tell the process to immediately kill the child process and continue working other jobs. You can get a list of which signals the processes respond to and what they do at <a href="https://github.com/defunkt/resque/#signals">https://github.com/defunkt/resque/#signals</a>.</p>
+
+
+<p>To figure out which process is the parent process look for the one that says "Forked N at T" where N is the process number of the child that is currently proccessing the stuck job.</p>
+
+
+<p>Not sure which number is <strong>SIGUSR1</strong>? Use `<strong>kill -l</strong>`.</p>
+
+
+<p><script src="https://gist.github.com/aecb898f3dac1d8f0423.js"></script></p>
+
+
+<p>So we see that <strong>30</strong> is <strong>SIGUSR1</strong>. Finally, send that to the parent process.</p>
+
+
+<p><script src="https://gist.github.com/d67829bf4e9329c5006d.js"></script></p>
+
+
+<p>This will kill the child process immediately and allow the worker to get back to work.</p>
+
+
+<p>All of this information is in the Resque README, but it still took me some time to figure it out. So I thought I would just write a quick post on how we're handling this.</p>
+
+
+<p>If you've seen similar issues with stuck long running jobs and have been able to prevent them, please let us know.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Checking If Rake Was Called With Verbose Or Trace]]></title>
+    <link href="http://raylillywhite.github.com/checking-if-rake-was-called-with-verbose-or-t/index.html"/>
+    <updated>2012-01-24T00:00:00-08:00</updated>
+    <id>http://raylillywhite.github.com/checking-if-rake-was-called-with-verbose-or-t/checking-if-rake-was-called-with-verbose-or-t</id>
+    <content type="html"><![CDATA[<p>Recently we needed to check whether a rake task was called with the --verbose or --trace flags.</p>
+
+
+<p>For verbose you can do the following inside your rake task:</p>
+
+
+<p>
+<script src="https://gist.github.com/1670723.js?file=verbose.rb"></script>
+</p>
+
+
+<p>Pretty simple, right? Be careful though, the default value for verbose is the symbol :default so using it in a predicate like `if verbose` will allow it to pass through. You will need to explicitly compare it to true.</p>
+
+
+<p>Checking if your rake task was called with --trace is a bit more, well, verbose. Here is how you would do that:</p>
+
+
+<p>
+<script src="https://gist.github.com/1670723.js?file=trace.rb"></script>
+</p>
+
+]]></content>
+  </entry>
+  
+</feed>

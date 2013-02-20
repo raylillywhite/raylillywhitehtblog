@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: objective-c | My Octopress Blog]]></title>
+  <link href="http://raylillywhite.github.com/blog/categories/objective-c/atom.xml" rel="self"/>
+  <link href="http://raylillywhite.github.com/"/>
+  <updated>2013-02-19T16:28:46-08:00</updated>
+  <id>http://raylillywhite.github.com/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Handling multiple delegates in iOS]]></title>
+    <link href="http://raylillywhite.github.com/handling-multiple-delegates-in-ios/index.html"/>
+    <updated>2012-10-24T00:00:00-07:00</updated>
+    <id>http://raylillywhite.github.com/handling-multiple-delegates-in-ios/handling-multiple-delegates-in-ios</id>
+    <content type="html"><![CDATA[<p>Sometimes, the delegate pattern in iOS just doesn't fit with a class heirarchy or design, specifically when you find yourself wanting to assign multiple delegates to a single source. For these cases, the approach usually taken is to use the notification center. This is an approach I have used in the past, but it always felt like a cop-out. Instead, I decided to build a delegate proxy using an NSProxy subclass. It takes a list of target delegates, and operates on two simple rules:</p>
+
+
+<ol>
+<li>Messages with a void return type are sent to all target delegates</li>
+<li>Messages with non-void return types are send to the <em>first delegate in the list which responds to the selector.</em></li>
+</ol>
+
+
+<p>This pattern seems to be effective in identifying which messages are informative (hey, something happened) and which messages are more complex interactions (how should I do this?). It worked well for my use case (UIScrollViewDelegate), and I'm really curious to see how well it works for other applications. Comment if you find some use for it! &nbsp;Podspec included for CocoaPods users.</p>
+
+
+<p><a href="https://github.com/hoteltonight/HTDelegateProxy" title="HTDelegateProxy on GitHub" target="_blank">The class HTDelegateProxy is available here on GitHub.</a></p>
+
+]]></content>
+  </entry>
+  
+</feed>

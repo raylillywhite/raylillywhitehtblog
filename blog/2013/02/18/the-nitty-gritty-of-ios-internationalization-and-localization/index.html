@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The Nitty Gritty of iOS Internationalization and Localization - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="The best way to prevent hating your job when your company grows is to use the Apple provided localization tools from day one, even if you have no &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://raylillywhite.github.com/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:raylillywhite.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">The Nitty Gritty of iOS Internationalization and Localization</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-18T22:30:00-08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The best way to prevent hating your job when your company grows is to use the Apple provided localization tools from day one, even if you have no plans to localize your app. Maybe it&#8217;s not the best way, but it&#8217;s certainly required. From day one you should be using:</p>
+
+<ul>
+<li><code>NSNumberFormatter</code></li>
+<li><code>NSDateFormatter</code></li>
+<li><code>NSLocalizedString</code></li>
+<li><code>[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem]</code></li>
+</ul>
+
+
+<p>From day one, you should not be:</p>
+
+<ul>
+<li>Pluralizing by adding an &#8216;s&#8217; (Safe yourself some trouble and use separate localized strings for plural and singular nouns)</li>
+<li>Using magic numbers to set static sizes for views (specifically views with text)</li>
+<li>Using &#8216;$&#8217; or other currency symbols in string formats</li>
+</ul>
+
+
+<p>Let&#8217;s start with the easier ones.</p>
+
+<h2>NSNumberFormatter</h2>
+
+<p>NSNumberFormatter&#8217;s most important use in localization for us was with displaying currencies. Users will have a different expectation of how a given currency is displayed depending on what country they are from. A price in US Dollars could be shown as <code>$50.00</code>, <code>US$50.00</code>, <code>50,00 $US</code>, etc.</p>
+
+<p>NSNumberFormatter&#8217;s <code>NSNumberFormatterCurrencyStyle</code> allows you to let Apple decide which one to show the user, which gives them a consistent experience across all of their apps. Showing the full currency code (USD) would also work, and may be useful for certain detailed views like a verbose receipt, but we chose to stick with the more minimal format that NSNumberFormatter provides.
+Example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSNumberFormatter</span> <span class="o">*</span><span class="n">currencyFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSNumberFormatter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setNumberStyle:</span><span class="n">NSNumberFormatterCurrencyStyle</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setCurrencyCode:</span><span class="n">currencyCode</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setMaximumFractionDigits:</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setRoundingMode:</span><span class="n">NSNumberFormatterRoundHalfUp</span><span class="p">];</span>
+</span><span class='line'><span class="k">return</span> <span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">stringFromNumber:</span><span class="err">@</span><span class="p">(</span><span class="n">amount</span><span class="p">)];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Even if you aren&#8217;t displaying prices, make sure to use NSNumberFormatter to ensure that large numbers and decimals are displayed to the user correctly. <code>,</code> and <code>.</code> are switched in other locales.</p>
+
+<h3>Caching and Thread Safety</h3>
+
+<p>NSNumberFormatters and NSDateFormatters are slow to initialize and configure, so you generally want to cache any formatters that you can use in multiple places. Unfortunately they aren&#8217;t thread-safe though, so we keep separate formatters per thread:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSString</span> <span class="o">*</span><span class="nf">HTCurrencyString</span><span class="p">(</span><span class="kt">double</span> <span class="n">amount</span><span class="p">,</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">currencyCode</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">currencyFormatterKey</span> <span class="o">=</span> <span class="s">@&quot;HTCurrencyFormatter&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSNumberFormatter</span> <span class="o">*</span><span class="n">currencyFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSThread</span> <span class="n">currentThread</span><span class="p">]</span> <span class="n">threadDictionary</span><span class="p">][</span><span class="n">currencyFormatterKey</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">currencyFormatter</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">currencyFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSNumberFormatter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setNumberStyle:</span><span class="n">NSNumberFormatterCurrencyStyle</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setLocale:</span><span class="p">[</span><span class="n">NSLocale</span> <span class="n">currentLocale</span><span class="p">]];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">[[</span><span class="n">NSThread</span> <span class="n">currentThread</span><span class="p">]</span> <span class="n">threadDictionary</span><span class="p">][</span><span class="n">currencyFormatterKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">currencyFormatter</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setCurrencyCode:</span><span class="n">currencyCode</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setMaximumFractionDigits:</span><span class="mi">0</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">setRoundingMode:</span><span class="n">NSNumberFormatterRoundHalfUp</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="n">currencyFormatter</span> <span class="nl">stringFromNumber:</span><span class="err">@</span><span class="p">(</span><span class="n">amount</span><span class="p">)];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>NSDateFormatter</h2>
+
+<p>Using date formatters involves a couple of additional tricks, beyond the caching necessary for both date and number formatters. There are many built-in date formatter styles that we made use of with cached formatters like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSDateFormatter</span> <span class="o">*</span><span class="nf">HTMediumDateFormatter</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">mediumDateFormatterKey</span> <span class="o">=</span> <span class="s">@&quot;HTMediumDateFormatter&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSDateFormatter</span> <span class="o">*</span><span class="n">dateFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSThread</span> <span class="n">currentThread</span><span class="p">]</span> <span class="n">threadDictionary</span><span class="p">][</span><span class="n">mediumDateFormatterKey</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">dateFormatter</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">dateFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSDateFormatter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">dateFormatter</span> <span class="nl">setDateStyle:</span><span class="n">NSDateFormatterMediumStyle</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[[</span><span class="n">NSThread</span> <span class="n">currentThread</span><span class="p">]</span> <span class="n">threadDictionary</span><span class="p">][</span><span class="n">mediumDateFormatterKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">dateFormatter</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">dateFormatter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But there were also cases that weren&#8217;t really covered by the built-in styles, such as the date format that we prefer on our checkout screen, &#8220;Mon, Jan 28&#8221;. We previously were showing that by setting the date format with the string &#8220;EEE, MMM d&#8221;. This format doesn&#8217;t make sense for other countries though. We thought we would have to revert to using one of the built-in styles, but we found a very helpful method that Apple added in iOS 4.0: <code>+[NSDateFormatter dateFormatFromTemplate:options:locale:]</code>. That method will take the components of a date that you want, such as an abbreviated weekday, an abbreviated month and a day, and create a format string that suites the given locale.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>    <span class="p">[</span><span class="n">_dateFormatter</span> <span class="nl">setDateFormat:</span><span class="p">[</span><span class="n">NSDateFormatter</span> <span class="nl">dateFormatFromTemplate:</span><span class="s">@&quot;EEEMMMd&quot;</span>
+</span><span class='line'>                                                                  <span class="nl">options:</span><span class="mi">0</span>
+</span><span class='line'>                                                                   <span class="nl">locale:</span><span class="p">[</span><span class="n">NSLocale</span> <span class="n">currentLocale</span><span class="p">]]];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Depending on the user&#8217;s locale, that date formatter will give you strings like the following:</p>
+
+<ul>
+<li>US: <code>Mon, Jan 28</code></li>
+<li>UK: <code>Mon 28 Jan</code></li>
+<li>FR: <code>lun. 28 janv.</code></li>
+</ul>
+
+
+<p>Way easier and more reliable than trying to manipulate the built-in formats into the one that you&#8217;re looking for ;)  If you go through your app and replace your hardcoded date formats using this method, be careful not to don&#8217;t replace any date formats that you&#8217;re using for parsing.</p>
+
+<h3>Date Formatter Gotcha</h3>
+
+<p>When using a date formatter to parse dates from an API, make sure to set the locale to <code>@"en_US_POSIX"</code> for consistent behavior across devices/users.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSDateFormatter</span> <span class="o">*</span><span class="nf">HTRFC822DateFormatter</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">rfc822DateFormatterKey</span> <span class="o">=</span> <span class="s">@&quot;HTRFC822DateFormatter&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">NSDateFormatter</span> <span class="o">*</span><span class="n">dateFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSThread</span> <span class="n">currentThread</span><span class="p">]</span> <span class="n">threadDictionary</span><span class="p">][</span><span class="n">rfc822DateFormatterKey</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">dateFormatter</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">dateFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSDateFormatter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">dateFormatter</span> <span class="nl">setLocale:</span><span class="p">[[</span><span class="n">NSLocale</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithLocaleIdentifier:</span><span class="s">@&quot;en_US_POSIX&quot;</span><span class="p">]];</span>
+</span><span class='line'>        <span class="n">dateFormatter</span><span class="p">.</span><span class="n">dateFormat</span> <span class="o">=</span> <span class="s">@&quot;EEE, dd MMM yyyy HH:mm:ss ZZZ&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">[[</span><span class="n">NSThread</span> <span class="n">currentThread</span><span class="p">]</span> <span class="n">threadDictionary</span><span class="p">][</span><span class="n">rfc822DateFormatterKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">dateFormatter</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">dateFormatter</span><span class="p">.</span><span class="n">timeZone</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSTimeZone</span> <span class="n">systemTimeZone</span><span class="p">];</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">dateFormatter</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://developer.apple.com/library/ios/#qa/qa1480/_index.html">More information on this from Apple</a></p>
+
+<h2>NSLocalizedString</h2>
+
+<p>The most important part of localization: user facing strings. Apple provides NSLocalizedString to wrap any string or format that you&#8217;ll be displaying to the user. <a href="http://twitter.com/mattt">@Mattt</a> has a <a href="http://nshipster.com/nslocalizedstring/">great article about NSLocalizedString on NSHipster</a>, so instead of going into detail about it here, I&#8217;m just going to describe some things that we did differently, so that you can decide if you&#8217;d want to do something similar.</p>
+
+<p>As Mattt pointed out, the most common NSLocalizedString method is <code>NSString *NSLocalizedString(NSString *key, NSString *comment)</code>.  The basic behavior of that is to lookup the key in a <code>.strings</code> file that matches the preferred language of the user. We chose to use <code>NSLocalizedStringWithDefaultValue</code> though, because <code>NSLocalizedString(key, comment)</code> leaves you two straight-forward options:</p>
+
+<ol>
+<li><p>Use an English strings file (<code>en.lproj/Localizable.strings</code>) to map your keys to english strings. This means that your code no longer shows your english strings in context. That will increase the amount of jumping between files that you need to do, and can cause confusion if the keys look like English strings, but are out of sync with the strings file.</p></li>
+<li><p>Keep your English strings in code as the keys. In this case, keep your english strings file empty, and after you run genstrings to create your English strings file for your translators, discard it. We keep an empty english strings file in our repository with a comment in it that lets developers know that it&#8217;s intentionally empty, but I&#8217;m not sure if having an empty English strings file behaves any differently than just not having an English one. The downside to this approach is that modifying your English strings (which are your keys) will cause your strings in other languages not to line up anymore. In cases where the meaning of the string changed, that makes sense. But in cases where you&#8217;re fixing typos or rewording things that wouldn&#8217;t require re-translation, you could be causing extra work for your translators.</p></li>
+</ol>
+
+
+<p>I&#8217;d definitely recommend the second option, leaving the English strings file blank, because it&#8217;ll make development less painful. In the past, I&#8217;ve used the first option and it was no fun to regularly switch back and forth between code and the strings file, or to search for a user-facing string by looking up the key in the strings file. The reason we chose to use the more complicated <code>NSLocalizedStringWithDefaultValue</code> is to prevent changes to English strings breaking the keys for the strings files as would normally happen by using the empty English strings file approach.</p>
+
+<p>We created a macro (with a much shorter name) to minimize our pain with using NSLocalizedStringWithDefaultValue:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="cp">#define HTStr(key, value, comment) NSLocalizedStringWithDefaultValue(key, nil, [NSBundle mainBundle], value, comment)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Example usage:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">emailField</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">HTStr</span><span class="p">(</span><span class="s">@&quot;S_Email&quot;</span><span class="p">,</span> <span class="s">@&quot;Email&quot;</span><span class="p">,</span> <span class="s">@&quot;Placeholder for login email field&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this we have the option of changing just the English string, to prevent retranslation and breaking links to existing translations. Or, we can change the key and the value to trigger a retranslation if the meaning of the English string has changed at all. There are a couple downsides to this approach though. Using our macro caused genstrings to not find our strings, so we had to hack together a <a href="https://gist.github.com/raylillywhite/4984291">script for generating our strings file</a>. And you could accidentally use the same key for two different values. Fortunately, this is caught by genstrings:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Key</span> <span class="s">&quot;S_Email&quot;</span> <span class="n">used</span> <span class="n">with</span> <span class="n">multiple</span> <span class="n">values</span><span class="p">.</span> <span class="n">Value</span> <span class="s">&quot;Email&quot;</span> <span class="n">kept</span><span class="p">.</span> <span class="n">Value</span> <span class="s">&quot;E-mail&quot;</span> <span class="n">ignored</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In hindsight though, we probably would have been fine with using the simple <code>NSLocalizedString(key, comment)</code>. Smartling makes it pretty easy for us to get our strings files updated by the translators, so if keys were to change anytime we change the English text, that wouldn&#8217;t be a big problem. And you could always selectively use <code>NSLocalizedStringWithDefaultValue</code> in that case.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Ray Lillywhite</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-18T22:30:00-08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://raylillywhite.github.com/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/" data-via="" data-counturl="http://raylillywhite.github.com/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/lets-stop-making-our-users-type-gmailcom/index.html" title="Previous Post: Let's stop making our users type @gmail.com">&laquo; Let's stop making our users type @gmail.com</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/">The Nitty Gritty of iOS Internationalization and Localization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/lets-stop-making-our-users-type-gmailcom/index.html">Let's stop making our users type @gmail.com</a>
+      </li>
+    
+      <li class="post">
+        <a href="/174411869/index.html">Internationalization and localization - Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/internationalization-and-localization-plannin/index.html">Internationalization and localization - Planning, tools, and process</a>
+      </li>
+    
+      <li class="post">
+        <a href="/asynchronous-state-aware-component-rasterizat/index.html">State-aware cached rasterization in iOS for epic performance</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

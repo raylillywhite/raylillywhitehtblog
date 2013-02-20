@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Killing Stale or Stuck Resque Jobs - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="We use Resque (https://github.com/defunkt/resque) for processing our background jobs in Rails. We initially implemented Resque to send a few emails, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:raylillywhite.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Killing Stale or Stuck Resque Jobs</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-17T00:00:00-07:00" pubdate data-updated="true">Aug 17<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>We use Resque (<a href="https://github.com/defunkt/resque)">https://github.com/defunkt/resque)</a> for processing our background jobs in Rails. We initially implemented Resque to send a few emails, but have since expanded our use greatly.</p>
+<p>As we&#8217;ve begun relying more on Resque for all aspects of our app, we will occasionally experience long running jobs that get stuck. We know the job has finished  (an email was sent or a file was generated), but the job holds on to the worker and clogs our queue. Here is our method for killing the stuck jobs and getting our queue going again.</p>
+<p><!--more--></p>
+<p>Log into the machine that has the stuck worker and retrieve a list of the currently running Resque processes.</p>
+<p><script src="https://gist.github.com/5d10d4e558484d9a7be6.js?file=procs.sh"></script></p>
+<p>What we want to do is send the <strong>SIGUSR1</strong> signal to the parent process. This will tell the process to immediately kill the child process and continue working other jobs. You can get a list of which signals the processes respond to and what they do at <a href="https://github.com/defunkt/resque/#signals">https://github.com/defunkt/resque/#signals</a>.</p>
+<p>To figure out which process is the parent process look for the one that says &#8220;Forked N at T&#8221; where N is the process number of the child that is currently proccessing the stuck job.</p>
+<p>Not sure which number is <strong>SIGUSR1</strong>? Use `<strong>kill -l</strong>`.</p>
+<p><script src="https://gist.github.com/aecb898f3dac1d8f0423.js"></script></p>
+<p>So we see that <strong>30</strong> is <strong>SIGUSR1</strong>. Finally, send that to the parent process.</p>
+<p><script src="https://gist.github.com/d67829bf4e9329c5006d.js"></script></p>
+<p>This will kill the child process immediately and allow the worker to get back to work.</p>
+<p>All of this information is in the Resque README, but it still took me some time to figure it out. So I thought I would just write a quick post on how we&#8217;re handling this.</p>
+<p>If you&#8217;ve seen similar issues with stuck long running jobs and have been able to prevent them, please let us know.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-17T00:00:00-07:00" pubdate data-updated="true">Aug 17<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/resque/'>resque</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/stale-worker/'>stale worker</a>, <a class='category' href='/blog/categories/stuck-job/'>stuck job</a>, <a class='category' href='/blog/categories/stuck-worker/'>stuck worker</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/index.html" data-via="" data-counturl="http://raylillywhite.github.com/killing-stale-or-stuck-resque-jobs/index.html" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/writing-android-unit-tests-with-robolectric/index.html" title="Previous Post: Writing Android Unit-Tests With Robolectric">&laquo; Writing Android Unit-Tests With Robolectric</a>
+      
+      
+        <a class="basic-alignment right" href="/capturing-global-hotkeys-in-the-ios-simulator/index.html" title="Next Post: Capturing global hotkeys in the iOS Simulator">Capturing global hotkeys in the iOS Simulator &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/18/the-nitty-gritty-of-ios-internationalization-and-localization/">The Nitty Gritty of iOS Internationalization and Localization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/lets-stop-making-our-users-type-gmailcom/index.html">Let's stop making our users type @gmail.com</a>
+      </li>
+    
+      <li class="post">
+        <a href="/174411869/index.html">Internationalization and localization - Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/internationalization-and-localization-plannin/index.html">Internationalization and localization - Planning, tools, and process</a>
+      </li>
+    
+      <li class="post">
+        <a href="/asynchronous-state-aware-component-rasterizat/index.html">State-aware cached rasterization in iOS for epic performance</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
